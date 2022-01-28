@@ -1,0 +1,25 @@
+.origen, .destino,.personas,.fechas,.ciudadO, .ciudadD, .precio{
+    padding: 5px;
+    margin: 5px;
+}
+.origen, .destino,.personas,.fechas, .formurario,.precio{
+    width: 50%;
+    height: 50%;
+    margin-left: 40%;
+}
+.dato1{
+    padding: 5px;
+    margin: 5px;
+    padding:15px;
+}
+.cVuelo, .cVuelos, .cpasajero{
+    margin:40px;
+    margin-left: 40%;
+}
+.fecha{
+    padding: 10px;
+    margin: 10px;
+    width: 50%;
+    height: 50%;
+    margin-left: 40%;
+}

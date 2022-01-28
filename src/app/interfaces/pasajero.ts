@@ -8,5 +8,6 @@ export interface Pasajero {
     fecha:Date;
     cantidadViajes:number;
     millasViajadas:number;
-    tipoViajero:String
+    tipoViajero:String;
+    isFrecuente:boolean
 }

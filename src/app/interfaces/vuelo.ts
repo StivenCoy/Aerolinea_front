@@ -3,7 +3,7 @@ import { Ruta } from "./ruta";
 export interface Vuelo {
     idVuelo:number;
     fecha:Date;
-    escala:String;
+    isEscala:boolean;
     numero:String;
     hora:String;
     sillasDisponibles:number;
