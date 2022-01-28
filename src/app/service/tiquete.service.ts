@@ -12,6 +12,7 @@ export class TiqueteService {
   ) { }
 
 
+  //falta
   crearTiquete(tiquete: Tiquete) {
     const path = `http://localhost:8080/Api/Tiquete/Crear`;
     return this.http.post<object[]>(path,tiquete);

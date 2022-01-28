@@ -14,7 +14,7 @@ export class ReservaService {
 
   listarReservas() {
     const path = 'http://localhost:8080/Api/Reserva/Listar';
-    return this.http.get<object[]>(path);
+    return this.http.get<Reserva[]>(path);
   }
 
   listarAtributosReservas() {
@@ -22,8 +22,9 @@ export class ReservaService {
     return this.http.get<object[]>(path);
   }
 
+  //falta
   crearReserva(reserva: Reserva) {
     const path = `http://localhost:8080/Api/Reserva/Crear`;
-    return this.http.post<object[]>(path,reserva);
+    return this.http.post<String []>(path,reserva);
   }
 }

@@ -1,0 +1,36 @@
+<section class="empleados">
+    <html>  
+     <div  class = "origen">
+       <label class="ciudadO">Ciudad Origen</label>
+        <select class="form-select" [(ngModel)]="ciudadOrigen"  (change)="listarIda()">
+            <option *ngFor = "let o of origenes">{{o}} </option>
+        </select>
+     </div>
+     <div  class = "destino">
+        <label class="ciudadD">Ciudad destino</label>
+         <select class="form" [(ngModel)]="selecte" >
+             <option *ngFor = "let d of destinos">{{d}} </option>
+         </select>
+         <h2>{{isVisa}}</h2>
+        
+        </div>
+        <!-- <h2>{{pasajero.correo}}</h2> -->
+        <h2>{{vuelo.numero}}</h2>
+           
+      <div class="personas">
+        <label class="idvuelo"> Numero personas </label>
+        <input type="text" class="lidvuelo" id="vuelo" [(ngModel)]="cantidad">
+      </div>
+      <div class="fechas">
+        <label class="fechaO"> Fecha  </label>
+        <input type="date" [(ngModel)]="fecha">
+      </div>
+
+      <div class="vuelos">
+        <button class="cVuelo" (click)="listarVuelos()" > Buscar vuelos </button>
+      </div>
+
+      
+    
+    </html>
+</section>

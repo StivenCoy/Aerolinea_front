@@ -11,6 +11,7 @@ export class PasajeroService {
     private http: HttpClient
   ) { }
 
+  //falta
   crearPasajero(pasajero: Pasajero) {
     const path = `http://localhost:8080/Api/Pasajero/Crear`;
     return this.http.post<Pasajero>(path,pasajero);
