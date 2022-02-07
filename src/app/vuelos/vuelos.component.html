@@ -6,21 +6,22 @@
             <option *ngFor = "let origen of ciudadesOrigen">{{origen}} </option>
         </select>
      </div>
+
      <div  class = "destino">
         <label class="ciudadD">Ciudad destino</label>
          <select class="form" [(ngModel)]="ciudadDestino" >
              <option *ngFor = "let destinos of ciudadesDestino">{{destinos}} </option>
-         </select>
-         <!-- <h2>{{isVisa}}</h2> -->
-        
+         </select>    
       </div>
 
         <div> 
           <button (click)="SeleccionarVueloIda()" class="cVuelo"> Vuelo Ida (OW) </button>
         </div>
+
         <div> 
           <button (click)="SeleccionarVueloIdaRegreso()" class="cVuelo"> Vuelo Ida y Regreso (RT) </button>
         </div>
+
         <div class="fechas">
           <label class="fechaO"> Fecha ida  </label>
           <input type="date" [(ngModel)]="fechaIda">
@@ -34,24 +35,17 @@
 
         </div>
         
-
-       
-
-        <!-- <p> {{vueloIda}}</p>
-        <p> {{vueloIdaRegreso}}</p>
-         -->
-        <!-- <h2>{{pasajero.correo}}</h2> -->
-        <!-- <h2>{{vuelo.numero}}</h2> -->
-        
         <div>
           <div class="personas">
             <label class="adulto"> Numero de adultos </label>
             <input type="text" class="lidvuelo" id="vuelo" [(ngModel)]="cantidadAdultos">
           </div>
+
           <div class="personas">
             <label class="niño"> Numero de niños </label>
             <input type="text" class="lidvuelo1" id="vuelo" [(ngModel)]="cantidadNinos">
           </div>
+
           <div class="personas">
             <label class="infantes"> Numero de infantes </label>
             <input type="text" class="lidvuelo" id="vuelo" [(ngModel)]="cantidadInfantes">
@@ -143,12 +137,10 @@
 
        </div>
 
-
-
-
-       <div class="formurario">
+       
+       <div *ngIf="habilitarDatosUsuario" class="formurario">
         <h1> Datos Pasajero</h1>
-         <p  [(ngModel)]="numeroP"> pasajero numero {{numeroP}} </p> 
+         <!-- <p  [(ngModel)]="numeroP"> pasajero numero  </p>  -->
        
          <div class="dato1"> 
           <label class="nPasaporte"> Id pasaporte </label>
@@ -185,11 +177,11 @@
           <input type="date" [(ngModel)]="visa">
         </div>
     
-        <!-- <div class="dato1">
+         <!-- <div class="dato1">
           <button class="cpasajero" (click)="crearPasajero()" > Crear Pasajero </button>
-        </div> -->
+        </div>  -->
         
-      </div>  
+      </div>   
       
     
     </html>

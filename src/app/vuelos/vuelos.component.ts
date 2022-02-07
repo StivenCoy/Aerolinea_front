@@ -28,6 +28,7 @@ export class VuelosComponent implements OnInit {
   public vuelo! : Vuelo;
   public vueloSeleccionadoIda!: Vuelo;
   public vueloSeleccionadoRegreso!: Vuelo;
+  public habilitarDatosUsuario : boolean = false;
   pasajeroFrecuente : String=''; 
   ciudadOrigen : string='';
   ciudadDestino : string='';
@@ -80,7 +81,7 @@ export class VuelosComponent implements OnInit {
   
 }
 pedirDatosPasajeros(){
-
+this.habilitarDatosUsuario = true;
 }
 
 
