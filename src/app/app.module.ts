@@ -6,7 +6,8 @@ import { InterfacesComponent } from './interfaces/interfaces.component';
 import { ServiceComponent } from './service/service.component';
 import { VuelosComponent } from './vuelos/vuelos.component';
 import { FormsModule } from '@angular/forms';
-import {HttpClientModule} from '@angular/common/http'
+import {HttpClientModule} from '@angular/common/http';
+import { PasajeroComponent } from './pasajero/pasajero.component'
 
 
 @NgModule({
@@ -14,7 +15,8 @@ import {HttpClientModule} from '@angular/common/http'
     AppComponent,
     InterfacesComponent,
     ServiceComponent,
-    VuelosComponent
+    VuelosComponent,
+    PasajeroComponent
   ],
   imports: [
     BrowserModule,

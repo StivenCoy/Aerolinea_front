@@ -8,6 +8,7 @@ import { PasajeroService } from '../service/pasajero.service';
 import { RutaService } from '../service/ruta.service';
 import { VueloService } from '../service/vuelo.service';
 import { ReservaService } from '../service/reserva.service';
+import { Vuelos } from '../interfaces/vuelos';
 
 @Component({
   selector: 'app-vuelos',
@@ -15,24 +16,29 @@ import { ReservaService } from '../service/reserva.service';
   styleUrls: ['./vuelos.component.css']
 })
 export class VuelosComponent implements OnInit {
-  public origenes : Object[] =[] 
-  public destinos : Object[] =[] 
-  public lVuelos  : Object[] =[] 
-  public lVuelosV  : Object[] =[] 
-  public vuel :string[]=[]
+  public ciudadesOrigen : Object[] =[] 
+  public ciudadesDestino : Object[] =[] 
+  public vuelosIda  : Vuelos[] =[] 
+  public vuelosRegreso : Vuelos[] = []
   isVisa : boolean=true;
+  public vueloIda : boolean = false;
+  public vueloIdaRegreso : boolean = false;
   public pasajero!: Pasajero;
   public reserva! : Reserva[];
   public vuelo! : Vuelo;
+  public vueloSeleccionadoIda!: Vuelo;
+  public vueloSeleccionadoRegreso!: Vuelo;
   pasajeroFrecuente : String=''; 
-
   ciudadOrigen : string='';
-  selecte : string='';
-
-  fecha : Date=new Date;
-  cantidad :number=0;
+  ciudadDestino : string='';
+  fechaIda : Date=new Date;
+  fechaRegreso : Date = new Date;
+  cantidadAdultos : number = 0;
+  cantidadNinos : number = 0;
+  cantidadInfantes : number = 0;
   fechaR :Date=new Date;
 
+  //atributos pasajero
   numeroP : number=1;
   pasaporte : number=0;
   nombre : string='';
@@ -45,6 +51,11 @@ export class VuelosComponent implements OnInit {
   totalViajeR : number=0;
   totalViajeI : number=0;
   totalViajes : number=0;
+
+   cantidad :number=0;
+
+
+
 ;
   constructor(
     private ciudadservice : CiudadService,
@@ -58,15 +69,20 @@ export class VuelosComponent implements OnInit {
 
   ngOnInit(): void {
     this.rutaservice.listarOrigenes().subscribe(result => {
-      this.origenes=result;
+      this.ciudadesOrigen=result;
     });
   }
 
-  // listarIda(){ 
-  //   this.rutaservice.listarDestinos(this.ciudadOrigen).subscribe(resultado => {
-  //   this.destinos=resultado;
-  // });
-//}
+   listarIda(){ 
+        this.rutaservice.listarDestinos(this.ciudadOrigen).subscribe(resultado => {
+         this.ciudadesDestino=resultado;
+  });
+  
+}
+pedirDatosPasajeros(){
+
+}
+
 
 
 //verifica si es una ciudad que requiere visa
@@ -82,6 +98,44 @@ buscarPasajero(){
   this.pasajero=resultado;
 });
 }
+
+ seleccionarVueloIda(idVuelo : number){
+ this.vueloservice.buscarVuelo(idVuelo).subscribe(vuelo =>{
+   this.vueloSeleccionadoIda= vuelo;
+ });
+
+ if (this.vueloIdaRegreso == true) {
+  this.vueloservice.listarVuelos(this.fechaRegreso, this.ciudadDestino, this.ciudadOrigen,this.cantidadAdultos + this.cantidadNinos).subscribe(res => {
+    this.vuelosRegreso=res;
+  });
+}
+else{
+  this.totalViajes = (this.cantidadAdultos+this.cantidadInfantes+this.cantidadNinos) * this.vueloSeleccionadoIda.precio;
+  console.log(this.vueloSeleccionadoIda.precio, 'precio', this.cantidadAdultos + this.cantidadInfantes + this.cantidadNinos)
+}
+}
+
+seleccionarVueloRegreso(idVuelo : number){
+  this.vueloservice.buscarVuelo(idVuelo).subscribe(vuelo =>{
+    this.vueloSeleccionadoRegreso= vuelo;
+  });
+
+  this.totalViajes = (this.cantidadAdultos+this.cantidadInfantes+this.cantidadNinos) * this.vueloSeleccionadoIda.precio +
+  (this.cantidadAdultos+this.cantidadInfantes+this.cantidadNinos) * this.vueloSeleccionadoRegreso.precio ;
+}
+
+
+SeleccionarVueloIda(){
+this.vueloIda=true;
+this.vueloIdaRegreso=false;
+
+
+}
+SeleccionarVueloIdaRegreso(){
+  this.vueloIda=false;
+  this.vueloIdaRegreso= true;
+
+  }
 
 //NO me sirve
 verificarPasajeroFrecuente(){ 
@@ -110,11 +164,11 @@ listarReservas(){
 // });
 // }
 
-listarIda(){ 
-  this.vueloservice.buscarVuelo(1).subscribe(resultado => {
-  this.vuelo=resultado;
-});
-}
+// listarIda(){ 
+//   this.vueloservice.buscarVuelo(1).subscribe(resultado => {
+//   this.vuelo=resultado;
+// });
+// }
 
 // listarIda(){ 
 //   this.reservaservice.listarReservas().subscribe(resultado => {
@@ -122,11 +176,15 @@ listarIda(){
 // });
 // }
 
-listarVuelos(){
-  console.log(this.fecha,this.ciudadOrigen, this.selecte, this.cantidad);
-  this.vueloservice.listarVuelos(this.fecha, this.ciudadOrigen, this.selecte,this.cantidad).subscribe(res => {
-    this.lVuelos=res;
-    
+ async listarVuelos(){ 
+ await  this.vueloservice.listarVuelos(this.fechaIda, this.ciudadOrigen, this.ciudadDestino,this.cantidadAdultos + this.cantidadNinos).subscribe(res => {
+    this.vuelosIda=res;
   });
 }
+
+// listarVuelosRegreso(){ 
+//   this.vueloservice.listarVuelos(this.fechaRegreso, this.ciudadDestino, this.ciudadOrigen,this.cantidadAdultos + this.cantidadNinos).subscribe(res => {
+//    this.lVuelos=res;
+//  });
+// }
 } 
