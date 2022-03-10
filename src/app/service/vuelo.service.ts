@@ -16,8 +16,6 @@ public lVuelos : Object[]=[];
     const path = `http://localhost:8080/api/vuelo/lista/?fecha=${fecha}&origen=${origen}&destino=${destino}&cantidad=${cantidad}`;
     return this.http.get<Vuelos[]>(path);
   }
-
-  //Metodo que busca un vuelo
    buscarVuelo(idvuelo:number ) {
     const path = `http://localhost:8080/api/vuelo/buscar/${idvuelo}`;
      return this.http.get<Vuelo>(path);

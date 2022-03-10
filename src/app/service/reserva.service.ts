@@ -17,7 +17,6 @@ export class ReservaService {
     const path = 'http://localhost:8080/api/reserva/listard';
     return this.http.get<ReservaInfo[]>(path);
   }
-
   crearReserva(reserva: Reserva) {
     const path = `http://localhost:8080/api/reserva/crear`;
     return this.http.post<Reserva>(path,reserva);

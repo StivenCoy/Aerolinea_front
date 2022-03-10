@@ -73,7 +73,6 @@ export class VuelosComponent implements OnInit {
   ) { } 
 
 
-
   ngOnInit(): void {
     this.rutaservice.listarOrigenes().subscribe(result => {
       this.ciudadesOrigen=result;
@@ -91,7 +90,6 @@ export class VuelosComponent implements OnInit {
     this.habilitarDatosUsuario = true;
     this.calcularCantidadMillasAViajar();
   }
-
   //metodo para buscar un pasajero
   buscarPasajero(){ 
     let pasajero : Pasajero;
@@ -249,7 +247,6 @@ comprarViaje(){
   console.log('su compra se realizo correctamente');
   //this.listReserva;
 }
-
 //verifica si un viajero es frecuente
 verificarPasajeroFrecuente(cedula : String, descuento : number){ 
     this.pasajeroservice.verificarPasajeroFrecuente(cedula, this.cantidadMillasViaje).subscribe(resultado => { 
@@ -265,6 +262,7 @@ verificarPasajeroFrecuente(cedula : String, descuento : number){
   this.verificarPasajeroFrecuente(cedula,descuento);
 });
 }
+//Verifica todas las reglas de negocio
   verificarReglasDeNegocio(){
     let descuentoPasajero : number =0;
     let frecuente : String = '';
@@ -272,7 +270,7 @@ verificarPasajeroFrecuente(cedula : String, descuento : number){
      this.calcularDescuento(this.listPasajeros[i].cedula);
   } 
   }
-
+  //Crear informacion de cada pasajero 
   crearInfoPasajero(descuento : number){
     let infoPasajero :info_pasajero = {
       frecuente : this.infoIsFrecuente,

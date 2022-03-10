@@ -14,7 +14,6 @@ export class RutaService {
     const path = `http://localhost:8080/api/ruta/destinos/${nombre}`;
     return this.http.get<object[]>(path);
   }
-
   listarOrigenes() {
     const path = `http://localhost:8080/api/ruta/origenes`;
     return this.http.get<object[]>(path);

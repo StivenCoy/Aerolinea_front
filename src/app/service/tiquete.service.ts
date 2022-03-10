@@ -11,12 +11,10 @@ export class TiqueteService {
     private http: HttpClient
   ) { }
 
-
   crearTiquete(tiquete: Tiquete) {
     const path = `http://localhost:8080/api/tiquete/crear`;
     return this.http.post<Tiquete>(path,tiquete);
   }
-
   calcularDescuento(idPasajero : String) {
     const path = `http://localhost:8080/api/tiquete/descuentos?idPasajero=${idPasajero}`;
     return this.http.get<number>(path);
