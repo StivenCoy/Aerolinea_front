@@ -9,4 +9,4 @@ export interface Vuelo {
     sillasDisponibles:number;
     precio:number;
     ruta:Ruta
-}
+} 

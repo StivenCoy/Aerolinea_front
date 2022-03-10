@@ -1,39 +1,38 @@
 <section class="empleados">
     <html>  
-     <div  class = "origen">
+  <div class= "cuerpo">
+  <h1 class="titulo">Vuela Tranquilo con Wingo</h1>
+  
+  
+    <div  class = "origen">
        <label class="ciudadO">Ciudad Origen</label>
         <select class="form-select" [(ngModel)]="ciudadOrigen"  (change)="listarIda()">
+          <option selected>Seleccionar una ciudad</option>
             <option *ngFor = "let origen of ciudadesOrigen">{{origen}} </option>
         </select>
-     </div>
 
-     <div  class = "destino">
         <label class="ciudadD">Ciudad destino</label>
          <select class="form" [(ngModel)]="ciudadDestino" >
+          <option selected>Seleccionar una ciudad</option>
              <option *ngFor = "let destinos of ciudadesDestino">{{destinos}} </option>
-         </select>    
-      </div>
+         </select>  
+         
+         <button (click)="SeleccionarTipoVueloIda()" class="cVuelo"> Vuelo Ida (OW) </button>
+         <button (click)="SeleccionarTipoVueloIdaRegreso()" class="cVuelo"> Vuelo Ida y Regreso (RT) </button>
 
-        <div> 
-          <button (click)="SeleccionarVueloIda()" class="cVuelo"> Vuelo Ida (OW) </button>
-        </div>
-
-        <div> 
-          <button (click)="SeleccionarVueloIdaRegreso()" class="cVuelo"> Vuelo Ida y Regreso (RT) </button>
-        </div>
+    </div>
 
         <div class="fechas">
           <label class="fechaO"> Fecha ida  </label>
           <input type="date" [(ngModel)]="fechaIda">
         </div>
-        
-        <div *ngIf="vueloIdaRegreso">
-          <div class="fechas">
-            <label class="fechaO"> Fecha regreso  </label>
-            <input type="date" [(ngModel)]="fechaRegreso">
-          </div>
-
+        <div *ngIf="vueloIdaRegreso" class="fechas">
+          <label class="fechaO"> Fecha regreso  </label>
+          <input type="date" [(ngModel)]="fechaRegreso">
         </div>
+
+
+
         
         <div>
           <div class="personas">
@@ -43,7 +42,7 @@
 
           <div class="personas">
             <label class="niño"> Numero de niños </label>
-            <input type="text" class="lidvuelo1" id="vuelo" [(ngModel)]="cantidadNinos">
+            <input type="text" class="lidvuelo" id="vuelo" [(ngModel)]="cantidadNinos">
           </div>
 
           <div class="personas">
@@ -51,97 +50,114 @@
             <input type="text" class="lidvuelo" id="vuelo" [(ngModel)]="cantidadInfantes">
           </div>
         </div>
-     
-      
 
       <div class="vuelos">
-        <button class="cVuelo" (click)="listarVuelos()" > Buscar vuelos </button>
+        <button class="buscarVuelos" (click)="listarVuelos()" > Buscar vuelos </button>
       </div>
 
+
+
       <div class="tabla">
-        <h1> Datos vuelo Ida</h1>
-        <table width="100%" id="miTabla">
+        <h1 class="titulo"> Datos vuelos Ida</h1>
+        <table width="100%" class="miTabla">
          <tr>
-           <th> Fecha </th>
+           <th> Hora vuelo </th>
            <th> Duracion </th>
-           <th> Escala </th>
+           <th> Tipo Vuelo </th>
            <th> Precio Persona </th>
-           <th> Id Vuelo </th>
-           <th> Seleccionar Vuelo</th>
+           <th> Seleccionar Vuelo </th>
          </tr>
          <ng-container *ngFor="let vuelo of vuelosIda">
          <tr>
-           <p>{{vuelo.isEscala}}</p>
-           <td>{{vuelo.fecha}}</td>
-           <td>{{vuelo.duracion}}</td>
-           <td>{{vuelo.isEscala}}</td>
-           <td>{{vuelo.precio}}</td>
-           <td>{{vuelo.idVuelo}}</td>
+           <th>{{vuelo.hora}}</th>
+           <th>{{vuelo.duracion}}</th>
+           <th>{{vuelo.tipoVuelo}}</th>
+           <th>{{vuelo.precio}}</th>
            <th>
-            <div class="botones">
               <button (click)="seleccionarVueloIda(vuelo.idVuelo)" class="cVuelo"> selecionar vuelo </button>
-            </div>
-
            </th>
           </tr>
          </ng-container>
         </table>
        </div>
 
+
+
+
+
+
+       <div *ngIf="vueloIdaRegreso">
        
        <div class="tabla">
-        <h1> Datos vuelo regreso</h1>
-        <table width="100%" id="miTabla">
+        <h1 class="titulo"> Datos vuelos regreso</h1>
+        <table width="100%" class="miTabla">
          <tr>
-           <th> Fecha </th>
+           <th> Hora vuelo </th>
            <th> Duracion </th>
-           <th> Escala </th>
+           <th> Tipo Vuelo </th>
            <th> Precio Persona </th>
-           <th> Id Vuelo </th>
            <th> Seleccionar Vuelo</th>
          </tr>
          <ng-container *ngFor="let vueloR of vuelosRegreso">
          <tr>
-           <p>{{vueloR.isEscala}}</p>
-           <td>{{vueloR.fecha}}</td>
-           <td>{{vueloR.duracion}}</td>
-           <td>{{vueloR.isEscala}}</td>
-           <td>{{vueloR.precio}}</td>
-           <td>{{vueloR.idVuelo}}</td>
+           <th>{{vueloR.hora}}</th>
+           <th>{{vueloR.duracion}}</th>
+           <th>{{vueloR.tipoVuelo}}</th>
+           <th>{{vueloR.precio}}</th>
            <th>
-            <div class="botones">
               <button (click)="seleccionarVueloRegreso(vueloR.idVuelo)" class="cVuelo"> selecionar vuelo </button>
-            </div>
            </th>
           </tr>
          </ng-container>
         </table>
        </div>
+      </div>
 
 
        <div *ngIf="vueloSeleccionadoIda">
-         <h1> Precio a pagar</h1>
-         <h2> {{totalViajes}} </h2>
+          <div class="personas">
+            <span class="input-g-t" >Total a pagar</span>
+            <input type="text" class="form-lidvuelo" value="$ {{precioTotalViajes}}" aria-label="Total a pagar"
+                aria-describedby="basic-addon1">
+          </div>
 
-         <h1> Precio de cada tiquete ida</h1>
-          <h2> {{vueloSeleccionadoIda.precio}} </h2>
+          <div class="personas">
+            <span class="input-g-t" > Precio de cada tiquete ida </span>
+            <input type="text" class="form-control" value="$ {{vueloSeleccionadoIda.precio}}" aria-label="Total a pagar"
+                aria-describedby="basic-addon1">
+          </div>
          
          <div *ngIf="vueloIdaRegreso">
-          <h1> Precio de cada tiquete vuelta</h1>
-          <h2> {{vueloSeleccionadoRegreso.precio}} </h2>
+          <div class="personas">
+            <span class="input-g-t" > Precio de cada tiquete vuelta </span>
+            <input type="text" class="form-control" value="$ {{vueloSeleccionadoRegreso.precio}}" aria-label="Total a pagar"
+                aria-describedby="basic-addon1">
+          </div>
          </div>
 
          <div> 
-          <button (click)="pedirDatosPasajeros()" class="cVuelo"> Continuar </button>
+          <button (click)="pedirDatosPasajeros()" class="buscarVuelos"> Continuar </button>
         </div>
 
        </div>
 
+
+
+
+
        
        <div *ngIf="habilitarDatosUsuario" class="formurario">
         <h1> Datos Pasajero</h1>
-         <!-- <p  [(ngModel)]="numeroP"> pasajero numero  </p>  -->
-       
+
+        <div class="dato1">
+          <label class="cedula"> cedula </label>
+          <input type="text" class="lcedula"  [(ngModel)]="cedula">
+        </div>
+
+        <div class="dato1">
+            <button class="bus" (click)="buscarPasajero()" > buscar Pasajero </button>
+        </div> 
+
          <div class="dato1"> 
           <label class="nPasaporte"> Id pasaporte </label>
           <input type="text" class="lnPasaporte"  [(ngModel)]="pasaporte">
@@ -172,17 +188,32 @@
           <input type="text" class="ledad"  [(ngModel)]="edad">
         </div>
     
-        <div class="dato1">
+        <div *ngIf="requiereVisa">
           <label class="visa"> Visa </label>
           <input type="date" [(ngModel)]="visa">
+          </div>
+
+          <div  class = "dato1">
+            <label class="tipoPasajero">Tipo de pasajero</label>
+             <select class="form-select" [(ngModel)]="tipoViajero">
+               <option selected>Seleccionar un tipo</option>
+                 <option *ngFor = "let tipo of tiposPjs">{{tipo}} </option>
+             </select>
+          </div>
+        <div> 
+          <button (click)="registrarPasajero()" class="vuelos"> Continuar </button>
+        </div>   
+      </div>
+
+
+
+
+
+        <div> 
+          <button (click)="comprarViaje()" class="buscarVuelos"> Comprar </button>
         </div>
-    
-         <!-- <div class="dato1">
-          <button class="cpasajero" (click)="crearPasajero()" > Crear Pasajero </button>
-        </div>  -->
-        
-      </div>   
-      
-    
+
+
+      </div>
     </html>
 </section>

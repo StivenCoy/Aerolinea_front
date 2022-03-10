@@ -11,12 +11,12 @@ export class RutaService {
   ) { }
 
   listarDestinos(nombre:String) {
-    const path = `http://localhost:8080/Api/Ruta/Destinos/${nombre}`;
+    const path = `http://localhost:8080/api/ruta/destinos/${nombre}`;
     return this.http.get<object[]>(path);
   }
 
   listarOrigenes() {
-    const path = `http://localhost:8080/Api/Ruta/Origenes`;
+    const path = `http://localhost:8080/api/ruta/origenes`;
     return this.http.get<object[]>(path);
   }
 

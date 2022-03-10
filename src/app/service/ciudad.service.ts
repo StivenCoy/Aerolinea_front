@@ -12,7 +12,7 @@ export class CiudadService {
 
   //Metodo que busca si una ciudad requiere de visa
   verificarRequiereVisa(nombre : String) {
-    const path = `http://localhost:8080/Api/Ciudad/Visa/${nombre}`;
+    const path = `http://localhost:8080/api/ciudad/visa/${nombre}`;
     return this.http.get<boolean>(path);
   }
 }

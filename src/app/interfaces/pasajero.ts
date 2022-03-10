@@ -9,5 +9,6 @@ export interface Pasajero {
     cantidadViajes:number;
     millasViajadas:number;
     tipoViajero:String;
-    isFrecuente:boolean
+    isFrecuente:boolean;
+    cedula: String;
 }

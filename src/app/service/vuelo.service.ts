@@ -13,13 +13,13 @@ public lVuelos : Object[]=[];
   ) { }
 
   listarVuelos(fecha:Date,origen:String, destino:String,cantidad:number ) {
-    const path = `http://localhost:8080/Api/Vuelo/Lista/?fecha=${fecha}&origen=${origen}&destino=${destino}&cantidad=${cantidad}`;
+    const path = `http://localhost:8080/api/vuelo/lista/?fecha=${fecha}&origen=${origen}&destino=${destino}&cantidad=${cantidad}`;
     return this.http.get<Vuelos[]>(path);
   }
 
   //Metodo que busca un vuelo
    buscarVuelo(idvuelo:number ) {
-    const path = `http://localhost:8080/Api/Vuelo/Buscar/${idvuelo}`;
+    const path = `http://localhost:8080/api/vuelo/buscar/${idvuelo}`;
      return this.http.get<Vuelo>(path);
   }
 

@@ -13,18 +13,18 @@ export class PasajeroService {
 
   //falta
   crearPasajero(pasajero: Pasajero) {
-    const path = `http://localhost:8080/Api/Pasajero/Crear`;
+    const path = `http://localhost:8080/api/pasajero/crear`;
     return this.http.post<Pasajero>(path,pasajero);
   }
 
-  buscarPasajero(idpasajero: number) {
-    const path = `http://localhost:8080/Api/Pasajero/Buscar/${idpasajero}`;
+  buscarPasajero(idpasajero: String) {
+    const path = `http://localhost:8080/api/pasajero/buscar/${idpasajero}`;
     return this.http.get<Pasajero>(path);
   }
 
-  verificarPasajeroFrecuente(idpasajero: number, millas: number) {
-    const path = `http://localhost:8080/Api/Pasajero/Crearlocalhost:8080/Api/Pasajero/Viaje?idPasajero=${idpasajero}&millas=${millas}`;
-    return this.http.get<String>(path,);
+  verificarPasajeroFrecuente(idpasajero:String, millas:number) {
+    const path = `http://localhost:8080/api/pasajero/viaje/?idPasajero=${idpasajero}&millas=${millas}`;
+    return this.http.get<object[]>(path);
   }
 
 }

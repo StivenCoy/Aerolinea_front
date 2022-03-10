@@ -1,7 +1,7 @@
 export interface Vuelos {
-    fecha:Date;
+    hora:String;
     duracion:String;
-    isEscala:boolean;
+    tipoVuelo:String;
     precio:number;
     idVuelo:number;
 }

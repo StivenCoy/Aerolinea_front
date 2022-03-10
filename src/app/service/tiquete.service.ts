@@ -12,14 +12,13 @@ export class TiqueteService {
   ) { }
 
 
-  //falta
   crearTiquete(tiquete: Tiquete) {
-    const path = `http://localhost:8080/Api/Tiquete/Crear`;
-    return this.http.post<object[]>(path,tiquete);
+    const path = `http://localhost:8080/api/tiquete/crear`;
+    return this.http.post<Tiquete>(path,tiquete);
   }
 
-  calcularDescuento(fechaInicio : Date, fechaFin : Date, idPasajero : number) {
-    const path = `http://localhost:8080/Api/Tiquete/Descuentos?fechaInicio=${fechaInicio}&fechaFin=${fechaFin}&idPasajero=${idPasajero}`;
+  calcularDescuento(idPasajero : String) {
+    const path = `http://localhost:8080/api/tiquete/descuentos?idPasajero=${idPasajero}`;
     return this.http.get<number>(path);
   }
 }
