@@ -31,6 +31,8 @@ export class VuelosComponent implements OnInit {
    habilitarDatosUsuario : boolean = false;
    vueloIda : boolean = false;
    vueloIdaRegreso : boolean = false;
+   habilitarDescuentos : boolean = false;
+   habilitarReservas : boolean = false;
    vueloSeleccionadoIda!: Vuelo;
    vueloSeleccionadoRegreso!: Vuelo;
 
@@ -82,7 +84,6 @@ export class VuelosComponent implements OnInit {
    listarIda(){ 
         this.rutaservice.listarDestinos(this.ciudadOrigen).subscribe(resultado => {
          this.ciudadesDestino=resultado; 
-         this.listarReservas();
   });
 }
   // habilita la info de pasajero
@@ -135,6 +136,7 @@ this.vaciarCamposInfoPasajero();
 verificarCantidadPasajerosRegistrados(){
   if(this.totalPjsRegistrados == this.totalViajeros){
     this.habilitarDatosUsuario = false;
+    this.habilitarDescuentos = true;
     this.verificarReglasDeNegocio();
   }
 }
@@ -154,9 +156,43 @@ vaciarCamposInfoPasajero(){
 crearPasajerosYTiquetes(reserva : Reserva){
   for (let i = 0; i < this.listPasajeros.length; i++) {
       this.pasajeroservice.crearPasajero(this.listPasajeros[i]).subscribe(pasajero =>{
-        this.crearTiquete(pasajero,reserva, this.datosPasajeros[i].precio);
+        if(this.vueloIdaRegreso == true){
+          this.crearTiquete(pasajero,reserva, this.datosPasajeros[i].precioRegreso);
+        }
+        this.crearTiquete(pasajero,reserva, this.datosPasajeros[i].precioIda);
       });
   }
+  this.vaciarInfo();
+}
+
+vaciarInfo(){
+  this.ciudadesOrigen  =[] 
+  this.ciudadesDestino  =[] 
+  this. vuelosIda   =[] 
+  this.vuelosRegreso  = []
+  this.listReserva!=[];
+  this.listPasajeros = [];
+  this.datosPasajeros = [];
+  this.vueloIda  = false;
+  this.vueloIdaRegreso  = false;
+  this.vueloSeleccionadoIda;
+  this.vueloSeleccionadoRegreso;
+
+
+  this.ciudadOrigen ='';
+  this.ciudadDestino ='';
+  this.fechaIda=new Date;
+  this.fechaRegreso  = new Date;
+  this.cantidadAdultos  = 0;
+  this.cantidadNinos  = 0;
+  this.cantidadInfantes  = 0;
+  this.requiereVisa  = false;
+
+  this.cantidadMillasViaje =0;
+
+  this.precioTotalViajes  =0;
+  this.totalPjsRegistrados  = 0; 
+  this.totalViajeros  =0;
 }
 //selecciona un vuelo de ida
   seleccionarVueloIda(idVuelo : number){
@@ -206,30 +242,31 @@ crearPasajerosYTiquetes(reserva : Reserva){
   //lista las reservas existentes
   listarReservas(){ 
     this.reservaservice.listarReservas().subscribe(resultado => {
+      this.habilitarReservas = true;
     this.listReserva=resultado;
   });
   } 
   //crea reservas
-crearReserva(){
-let tipoVuelo  ='';
-if(this.vueloIdaRegreso){
-  tipoVuelo='RT';
-}
-else{
-  tipoVuelo='OW';
-}
-  let reserva : Reserva={
-    idReserva: -1,
-    estado: 'Proceso',
-    tipoVuelo:tipoVuelo,
-    vueloIda:this.vueloSeleccionadoIda,
-    vueloVuelta:this.vueloSeleccionadoRegreso
+  crearReserva(){
+  let tipoVuelo  ='';
+  if(this.vueloIdaRegreso){
+    tipoVuelo='RT';
   }
-  this.reservaservice.crearReserva(reserva).subscribe(reserva => {
-    reserva=reserva;
-    this.crearPasajerosYTiquetes(reserva);
-  });
-}
+  else{
+    tipoVuelo='OW';
+  }
+    let reserva : Reserva={
+      idReserva: -1,
+      estado: 'Proceso',
+      tipoVuelo:tipoVuelo,
+      vueloIda:this.vueloSeleccionadoIda,
+      vueloVuelta:this.vueloSeleccionadoRegreso
+    }
+    this.reservaservice.crearReserva(reserva).subscribe(reserva => {
+      reserva=reserva;
+      this.crearPasajerosYTiquetes(reserva);
+    });
+  }
 //corregir el precio de cada tiquete
 crearTiquete(pasajero:Pasajero, reserva: Reserva, precio : number){
 let tiquete : Tiquete = {
@@ -248,18 +285,18 @@ comprarViaje(){
   //this.listReserva;
 }
 //verifica si un viajero es frecuente
-verificarPasajeroFrecuente(cedula : String, descuento : number){ 
+verificarPasajeroFrecuente(cedula : String, descuento : number,nombre:String){ 
     this.pasajeroservice.verificarPasajeroFrecuente(cedula, this.cantidadMillasViaje).subscribe(resultado => { 
       this.infoIsFrecuente= '' +resultado[0];
-      this.crearInfoPasajero(descuento);
+      this.crearInfoPasajero(descuento,cedula,nombre);
     });
 } 
  //calcula el descuento de un pasajero
- calcularDescuento(cedula : String) { 
+ calcularDescuento(cedula : String, nombre : String) { 
    let descuento: number;
   this.tiqueteService.calcularDescuento(cedula).subscribe(desc => {
   descuento = desc;
-  this.verificarPasajeroFrecuente(cedula,descuento);
+  this.verificarPasajeroFrecuente(cedula,descuento,nombre);
 });
 }
 //Verifica todas las reglas de negocio
@@ -267,16 +304,30 @@ verificarPasajeroFrecuente(cedula : String, descuento : number){
     let descuentoPasajero : number =0;
     let frecuente : String = '';
     for (let i = 0; i < this.listPasajeros.length; i++) {
-     this.calcularDescuento(this.listPasajeros[i].cedula);
+     this.calcularDescuento(this.listPasajeros[i].cedula,this.listPasajeros[i].nombre);
   } 
   }
   //Crear informacion de cada pasajero 
-  crearInfoPasajero(descuento : number){
-    let infoPasajero :info_pasajero = {
+  crearInfoPasajero(descuento : number,cedula:String, nombre:String){
+    let infoPasajero :info_pasajero;
+    if(this.vueloIdaRegreso == true){
+    infoPasajero = {
+      nombre : nombre,
+      cedula : cedula,
       frecuente : this.infoIsFrecuente,
       descuento : descuento,
-      precio : ((-descuento + 100) * this.precioTotalViajes) / 100
-    }
+      precioIda : ((-descuento + 100) * this.vueloSeleccionadoIda.precio) / 100,
+      precioRegreso : ((-descuento + 100) * this.vueloSeleccionadoRegreso.precio) / 100
+    }}
+    else{
+    infoPasajero = {
+      nombre : nombre,
+      cedula : cedula,
+      frecuente : this.infoIsFrecuente,
+      descuento : descuento,
+      precioIda : ((-descuento + 100) * this.vueloSeleccionadoIda.precio) / 100,
+      precioRegreso : 0
+  }}
     this.datosPasajeros.push(infoPasajero);
   }
   //listar los vuelos con los filtros  
