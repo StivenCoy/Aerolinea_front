@@ -16,10 +16,8 @@
           <option selected>Seleccionar una ciudad</option>
              <option *ngFor = "let destinos of ciudadesDestino">{{destinos}} </option>
          </select>  
-         
          <button (click)="SeleccionarTipoVueloIda()" class="cVuelo"> Vuelo Ida (OW) </button>
          <button (click)="SeleccionarTipoVueloIdaRegreso()" class="cVuelo"> Vuelo Ida y Regreso (RT) </button>
-
     </div>
 
         <div class="fechas">
@@ -37,12 +35,10 @@
             <label class="adulto"> Numero de adultos </label>
             <input type="text" class="lidvuelo" id="vuelo" [(ngModel)]="cantidadAdultos">
           </div>
-
           <div class="personas">
             <label class="niño"> Numero de niños </label>
             <input type="text" class="lidvuelo" id="vuelo" [(ngModel)]="cantidadNinos">
           </div>
-
           <div class="personas">
             <label class="infantes"> Numero de infantes </label>
             <input type="text" class="lidvuelo" id="vuelo" [(ngModel)]="cantidadInfantes">
@@ -70,18 +66,14 @@
            <th>{{vuelo.tipoVuelo}}</th>
            <th>{{vuelo.precio}}</th>
            <th>
-              <button (click)="seleccionarVueloIda(vuelo.idVuelo)" class="cVuelo"> selecionar vuelo </button>
+              <button (click)="seleccionarVueloIda(vuelo.idVuelo)" class="buscarVuelos"> selecionar vuelo </button>
            </th>
           </tr>
          </ng-container>
         </table>
        </div>
-
-
-
-       <div *ngIf="vueloIdaRegreso">
        
-       <div class="tabla">
+       <div class="tabla" *ngIf="vueloIdaRegreso">
         <h1 class="titulo"> Datos vuelos regreso</h1>
         <table width="100%" class="miTabla">
          <tr>
@@ -98,13 +90,12 @@
            <th>{{vueloR.tipoVuelo}}</th>
            <th>{{vueloR.precio}}</th>
            <th>
-              <button (click)="seleccionarVueloRegreso(vueloR.idVuelo)" class="cVuelo"> selecionar vuelo </button>
+              <button (click)="seleccionarVueloRegreso(vueloR.idVuelo)" class="buscarVuelos"> selecionar vuelo </button>
            </th>
           </tr>
          </ng-container>
         </table>
        </div>
-      </div>
 
 
        <div *ngIf="vueloSeleccionadoIda">
@@ -131,17 +122,11 @@
          <div> 
           <button (click)="pedirDatosPasajeros()" class="buscarVuelos"> Continuar </button>
         </div>
-
        </div>
 
 
-
-
-
-       
        <div *ngIf="habilitarDatosUsuario" class="formurario">
         <h1> Datos Pasajero</h1>
-
         <div class="dato1">
           <label class="cedula"> cedula </label>
           <input type="text" class="lcedula"  [(ngModel)]="cedula">
@@ -198,11 +183,69 @@
         </div>   
       </div>
 
+      <div *ngIf="habilitarDescuentos">
+      <div class="tabla">
+        <h1 class="titulo"> Informacion descuentos</h1>
+        <table width="100%" class="miTabla">
+         <tr>
+           <th> Nombre Pasajero </th>
+           <th> Cedula </th>
+           <th>  Frecuencia viajero</th>
+           <th> Descuento </th>
+           <th> Precio Final ida</th>
+           <th> Precio Final Regreso</th>
+         </tr>
+         <ng-container *ngFor="let pasajero of datosPasajeros">
+         <tr>
+           <th>{{pasajero.nombre}}</th>
+           <th>{{pasajero.cedula}}</th>
+           <th>{{pasajero.frecuente}}</th>
+           <th>{{pasajero.descuento}}%</th>
+           <th>{{pasajero.precioIda}}</th>
+           <th>{{pasajero.precioRegreso}}</th>
+          </tr>
+         </ng-container>
+        </table>
+       </div>
+
         <div> 
           <button (click)="comprarViaje()" class="buscarVuelos"> Comprar </button>
         </div>
+      </div>
+        <div> 
+          <button (click)="listarReservas()" class="buscarVuelos"> Listar Reservas </button>
+        </div>
 
-
+        <div *ngIf="habilitarReservas">
+        <div class="tabla">
+          <h1 class="titulo"> Datos de Reserva</h1>
+          <table width="100%" class="miTabla">
+           <tr>
+             <th> Nombre Pasajero </th>
+             <th> Apellido Pasajero </th>
+             <th>  Origen </th>
+             <th> Fecha VueloIda </th>
+             <th> Tipo Vuelo Ida</th>
+             <th> Destino</th>
+             <th> Fecha Regreso</th>
+             <th> Tipo vuelo Regreso</th>
+           </tr>
+           <ng-container *ngFor="let reserva of listReserva">
+           <tr>
+             <th>{{reserva.nombrePasajero}}</th>
+             <th>{{reserva.apellidoPasajero}}</th>
+             <th>{{reserva.origen}}</th>
+             <th>{{reserva.fechaIda}}%</th>
+             <th>{{reserva.tipoVueloIda}}</th>
+             <th>{{reserva.destino}}</th>
+             <th>{{reserva.fechaRegreso}}</th>
+             <th>{{reserva.tipoVueloRegreso}}</th>
+            </tr>
+           </ng-container>
+          </table>
+         </div>
+        </div>
+        
       </div>
     </html>
 </section>

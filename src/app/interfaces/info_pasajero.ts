@@ -1,5 +1,8 @@
 export interface info_pasajero {
+    nombre : String,
+    cedula : String,
     frecuente : String,
     descuento : number,
-    precio : number,
+    precioIda : number,
+    precioRegreso : number,
 }

@@ -1,5 +1,6 @@
 
 export interface ReservaInfo {
+	nombrePasajero : String,
 	apellidoPasajero :String,
 	origen :String,
 	fechaIda :String,

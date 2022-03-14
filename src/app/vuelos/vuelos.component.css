@@ -1,6 +1,7 @@
 .personas,.ciudadO, .ciudadD, .precio, .cVuelo{
     padding: 5px;
     margin: 5px;  
+    width: 180px;
 }
 .titulo{
     margin-left: 40%;
@@ -33,7 +34,12 @@
     padding:15px;
 }
  .buscarVuelos, .cpasajero{
+    padding: 5px;
+    margin: 5px;
+    width: 150px;
     margin-left: 40%;
+   
+   
 }
 .miTabla{
     border-bottom: 1px;
