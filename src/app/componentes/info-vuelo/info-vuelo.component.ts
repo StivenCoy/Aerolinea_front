@@ -1,43 +1,50 @@
-import { Component, OnInit } from '@angular/core';
-import { Pasajero } from '../interfaces/pasajero';
-import { Vuelo } from '../interfaces/vuelo';
-import { Reserva } from '../interfaces/reserva';
-import { TiqueteService } from '../service/tiquete.service';
-import { CiudadService } from '../service/ciudad.service';
-import { PasajeroService } from '../service/pasajero.service';
-import { RutaService } from '../service/ruta.service';
-import { VueloService } from '../service/vuelo.service';
-import { ReservaService } from '../service/reserva.service';
-import { Vuelos } from '../interfaces/vuelos';
-import { info_pasajero } from '../interfaces/info_pasajero';
-import { Tiquete } from '../interfaces/tiquete';
-import { ReservaInfo } from '../interfaces/reservaInfo';
-import { DatosVuelo } from '../interfaces/datosVuelo';
+import { Component, Input, OnInit, Output } from '@angular/core';
+import { Pasajero } from 'src/app/interfaces/pasajero';
+import { Vuelo } from 'src/app/interfaces/vuelo';
+import { Reserva } from 'src/app/interfaces/reserva';
+import { TiqueteService } from 'src/app/service/tiquete.service';
+import { CiudadService } from 'src/app/service/ciudad.service';
+import { PasajeroService } from 'src/app/service/pasajero.service';
+import { RutaService } from 'src/app/service/ruta.service';
+import { VueloService } from 'src/app/service/vuelo.service';
+import { ReservaService } from 'src/app/service/reserva.service';
+import { Vuelos } from 'src/app/interfaces/vuelos';
+import { info_pasajero } from 'src/app/interfaces/info_pasajero';
+import { Tiquete } from 'src/app/interfaces/tiquete';
+import { ReservaInfo } from 'src/app/interfaces/reservaInfo';
+import { DatosVuelo } from 'src/app/interfaces/datosVuelo';
+import { EventEmitter } from '@angular/core';
 
 @Component({
-  selector: 'app-vuelos',
-  templateUrl: './vuelos.component.html',
-  styleUrls: ['./vuelos.component.css']
+  selector: 'app-info-vuelo',
+  templateUrl: './info-vuelo.component.html',
+  styleUrls: ['./info-vuelo.component.css']
 })
-export class VuelosComponent implements OnInit {
-   ciudadesOrigen : Object[] =[] 
+export class InfoVueloComponent implements OnInit {
+
+  ciudadesOrigen : Object[] =[] 
    ciudadesDestino : Object[] =[] 
+   @Output() VuelosIda: EventEmitter<any> = new EventEmitter();
    vuelosIda  : Vuelos[] =[] 
    vuelosRegreso : Vuelos[] = []
    listReserva! : ReservaInfo[];
    listPasajeros : Pasajero[]= [];
    tiposPjs : String[] = ["Adulto","Niño", "Infante"]; 
    datosPasajeros : info_pasajero[] = []
+   @Output() VueloRegreso: EventEmitter<any> = new EventEmitter();
+   vueloRegreso! : DatosVuelo ;
+   @Output() CantidadPersonas: EventEmitter<any> = new EventEmitter();
 
    habilitarDatosUsuario : boolean = false;
    vueloIda : boolean = false;
+   @Output() VueloIdaRegreso: EventEmitter<any> = new EventEmitter();
    vueloIdaRegreso : boolean = false;
    habilitarDescuentos : boolean = false;
    habilitarReservas : boolean = false;
-   vueloSeleccionadoIda!: Vuelo;
+   vueloSeleccionadoIda: Vuelo;
    vueloSeleccionadoRegreso!: Vuelo;
-
-
+   @Output() HabilitarCampos: EventEmitter<any> = new EventEmitter();
+   @Output() CiudadOrigen: EventEmitter<any> = new EventEmitter();
   ciudadOrigen : string='';
   ciudadDestino : string='';
   fechaIda : Date=new Date;
@@ -73,24 +80,43 @@ export class VuelosComponent implements OnInit {
     private pasajeroservice : PasajeroService,
     public reservaservice : ReservaService,
     public tiqueteService : TiqueteService,
-  ) { } 
+    //private detalleVuelos : DetalleVuelosComponent
+  ) { }
 
-
+ 
   ngOnInit(): void {
     this.rutaservice.listarOrigenes().subscribe(result => {
       this.ciudadesOrigen=result;
     });
   }
+
+  habilitarTablaDescuentos(habilitarDescuentos : boolean):void {
+    this.habilitarDescuentos = habilitarDescuentos;
+  }
+  habilitarTablaReservas(habilitarReserva : boolean):void {
+    this.habilitarReservas = habilitarReserva;
+  }
+
+  listarDescuentos(descuentos :info_pasajero[]){
+    this.datosPasajeros=descuentos;
+  }
+
+
   //lista las ciudades desde donde se vuela
    listarIda(){ 
         this.rutaservice.listarDestinos(this.ciudadOrigen).subscribe(resultado => {
          this.ciudadesDestino=resultado; 
+         this.CiudadOrigen.emit({data : this.ciudadOrigen})
   });
 }
   // habilita la info de pasajero
-  pedirDatosPasajeros(){
+  pedirDatosPasajeros(vuelos : Vuelo[]){
+    if((this.vueloIdaRegreso == true && vuelos.length == 2) || (this.vueloIdaRegreso == false)){
+    this.vueloSeleccionadoIda = vuelos[0];
+    this.vueloSeleccionadoRegreso = vuelos[1];
     this.habilitarDatosUsuario = true;
     this.calcularCantidadMillasAViajar();
+    }
   }
   //metodo para buscar un pasajero
   buscarPasajero(){ 
@@ -348,9 +374,32 @@ verificarPasajeroFrecuente(cedula : String, descuento : number,nombre:String){
     fecha:this.fechaIda,
     cantidad:this.totalViajeros,
     }
+    if(this.vueloIdaRegreso == true){
+       this.vueloRegreso = {
+        origen:this.ciudadDestino,
+        destino:this.ciudadOrigen,
+        fecha:this.fechaRegreso,
+        cantidad:this.totalViajeros,
+        }
+    }
+    
     this.vueloservice.listarVuelos(vuelo).subscribe(res => {
       this.vuelosIda = res;
+      this.verificarCiudadRequiereVisa();
+      console.log(this.vuelosIda, 'vuelos')
+      this.precioTotalViajes = (Number(this.cantidadAdultos) + Number(this.cantidadInfantes) + Number(this.cantidadNinos));
+      // this.VuelosIda.emit({data : this.vuelosIda})
+      // this.VueloRegreso.emit({data : this.vueloRegreso})
+      // this.VueloIdaRegreso.emit({data : this.vueloIdaRegreso})
+      // this.HabilitarCampos.emit({data : true})
+      // this.CantidadPersonas.emit({data : this.precioTotalViajes})
     });
-
   }
+
+  cargarDatos(){ 
+      // this.infoVuelo.VuelosIda.subscribe(result => {
+      //   this.vuelosIda=result.data
+      // })
+    }
+
 } 

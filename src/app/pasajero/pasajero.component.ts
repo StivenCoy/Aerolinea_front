@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Pasajero } from '../interfaces/pasajero';
 
 @Component({
   selector: 'app-pasajero',

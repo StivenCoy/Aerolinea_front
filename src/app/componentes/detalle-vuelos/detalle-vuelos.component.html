@@ -1,0 +1,52 @@
+<div *ngIf="habilitarCampos">
+    <div class="tabla">
+      <div *ngIf="vueloSeleccionadoIda">
+        <h1 class="titulo"> Datos vuelos Regreso</h1>
+      </div>
+      <div *ngIf="!vueloSeleccionadoIda">
+        <h1 class="titulo"> Datos vuelos Ida</h1>
+      </div>
+        <table width="100%" class="miTabla">
+         <tr>
+           <th> Hora vuelo </th>
+           <th> Duracion </th>
+           <th> Tipo Vuelo </th>
+           <th> Precio Persona </th>
+           <th> Seleccionar Vuelo </th>
+         </tr>
+         <ng-container *ngFor="let vuelo of vuelosIda">
+         <tr>
+           <th>{{vuelo.hora}}</th>
+           <th>{{vuelo.duracion}}</th>
+           <th>{{vuelo.tipoVuelo}}</th>
+           <th>{{vuelo.precio}}</th>
+           <th>
+              <button (click)="seleccionarVueloIda(vuelo.idVuelo)" class="buscarVuelos"> selecionar vuelo </button>
+           </th>
+          </tr>
+         </ng-container>
+        </table>
+       </div>
+</div>
+
+<div *ngIf="vueloSeleccionadoIda">
+  <div class="personas">
+    <span class="input-g-t" >Total a pagar</span>
+    <input type="text" class="form-lidvuelo" value="$ {{precioTotalViajes}}" aria-label="Total a pagar"
+        aria-describedby="basic-addon1">
+  </div>
+
+  <div class="personas">
+    <span class="input-g-t" > Precio de cada tiquete ida </span>
+    <input type="text" class="form-control" value="$ {{vueloSeleccionadoIda.precio}}" aria-label="Total a pagar"
+        aria-describedby="basic-addon1">
+  </div>
+ 
+ <div *ngIf="vueloSeleccionadoRegreso!=null">
+  <div class="personas">
+    <span class="input-g-t" > Precio de cada tiquete vuelta </span>
+    <input type="text" class="form-control" value="$ {{vueloSeleccionadoRegreso.precio}}" aria-label="Total a pagar"
+        aria-describedby="basic-addon1">
+  </div>
+ </div>
+</div>

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Vuelo } from '../interfaces/vuelo';
 import { Vuelos } from '../interfaces/vuelos';
+import { DatosVuelo } from '../interfaces/datosVuelo';
 
 @Injectable({
   providedIn: 'root'
@@ -12,9 +13,9 @@ public lVuelos : Object[]=[];
     private http: HttpClient
   ) { }
 
-  listarVuelos(fecha:Date,origen:String, destino:String,cantidad:number ) {
-    const path = `http://localhost:8080/api/vuelo/lista/?fecha=${fecha}&origen=${origen}&destino=${destino}&cantidad=${cantidad}`;
-    return this.http.get<Vuelos[]>(path);
+  listarVuelos(vuelo : DatosVuelo) {
+    const path = `http://localhost:8080/api/vuelo/lista/`;
+    return this.http.post<Vuelos[]>(path, vuelo);
   }
    buscarVuelo(idvuelo:number ) {
     const path = `http://localhost:8080/api/vuelo/buscar/${idvuelo}`;

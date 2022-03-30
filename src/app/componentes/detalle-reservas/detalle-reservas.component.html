@@ -1,0 +1,35 @@
+<div>
+    <div> 
+        <button (click)="listarReservas()" class="buscarVuelos"> Listar Reservas </button>
+      </div>
+
+      <div *ngIf="habilitarReservas">
+      <div class="tabla">
+        <h1 class="titulo"> Datos de Reserva</h1>
+        <table width="100%" class="miTabla">
+         <tr>
+           <th> Nombre Pasajero </th>
+           <th> Apellido Pasajero </th>
+           <th>  Origen </th>
+           <th> Fecha VueloIda </th>
+           <th> Tipo Vuelo Ida</th>
+           <th> Destino</th>
+           <th> Fecha Regreso</th>
+           <th> Tipo vuelo Regreso</th>
+         </tr>
+         <ng-container *ngFor="let reserva of listReserva">
+         <tr>
+           <th>{{reserva.nombrePasajero}}</th>
+           <th>{{reserva.apellidoPasajero}}</th>
+           <th>{{reserva.origen}}</th>
+           <th>{{reserva.fechaIda}}%</th>
+           <th>{{reserva.tipoVueloIda}}</th>
+           <th>{{reserva.destino}}</th>
+           <th>{{reserva.fechaRegreso}}</th>
+           <th>{{reserva.tipoVueloRegreso}}</th>
+          </tr>
+         </ng-container>
+        </table>
+       </div>
+      </div>
+</div>

@@ -1,50 +1,36 @@
-import { Component, OnInit } from '@angular/core';
-import { Pasajero } from '../interfaces/pasajero';
-import { Vuelo } from '../interfaces/vuelo';
-import { Reserva } from '../interfaces/reserva';
-import { TiqueteService } from '../service/tiquete.service';
-import { CiudadService } from '../service/ciudad.service';
-import { PasajeroService } from '../service/pasajero.service';
-import { RutaService } from '../service/ruta.service';
-import { VueloService } from '../service/vuelo.service';
-import { ReservaService } from '../service/reserva.service';
-import { Vuelos } from '../interfaces/vuelos';
-import { info_pasajero } from '../interfaces/info_pasajero';
-import { Tiquete } from '../interfaces/tiquete';
-import { ReservaInfo } from '../interfaces/reservaInfo';
-import { DatosVuelo } from '../interfaces/datosVuelo';
+import { Component, OnInit, Input, Output } from '@angular/core';
+import { Pasajero } from 'src/app/interfaces/pasajero';
+import { Vuelo } from 'src/app/interfaces/vuelo';
+import { Reserva } from 'src/app/interfaces/reserva';
+import { TiqueteService } from 'src/app/service/tiquete.service';
+import { CiudadService } from 'src/app/service/ciudad.service';
+import { PasajeroService } from 'src/app/service/pasajero.service';
+import { ReservaService } from 'src/app/service/reserva.service';
+import { info_pasajero } from 'src/app/interfaces/info_pasajero';
+import { Tiquete } from 'src/app/interfaces/tiquete';
+import { EventEmitter } from '@angular/core';
 
 @Component({
-  selector: 'app-vuelos',
-  templateUrl: './vuelos.component.html',
-  styleUrls: ['./vuelos.component.css']
+  selector: 'app-info-pasajero',
+  templateUrl: './info-pasajero.component.html',
+  styleUrls: ['./info-pasajero.component.css']
 })
-export class VuelosComponent implements OnInit {
-   ciudadesOrigen : Object[] =[] 
-   ciudadesDestino : Object[] =[] 
-   vuelosIda  : Vuelos[] =[] 
-   vuelosRegreso : Vuelos[] = []
-   listReserva! : ReservaInfo[];
+export class InfoPasajeroComponent implements OnInit {
+
+  ciudadesOrigen : Object[] =[] 
    listPasajeros : Pasajero[]= [];
    tiposPjs : String[] = ["Adulto","Niño", "Infante"]; 
    datosPasajeros : info_pasajero[] = []
-
-   habilitarDatosUsuario : boolean = false;
+   @Output() DatosPasajeros = new EventEmitter<info_pasajero[]>() ;
+   @Input() habilitarDatosUsuario : boolean;
    vueloIda : boolean = false;
-   vueloIdaRegreso : boolean = false;
-   habilitarDescuentos : boolean = false;
-   habilitarReservas : boolean = false;
-   vueloSeleccionadoIda!: Vuelo;
-   vueloSeleccionadoRegreso!: Vuelo;
+   @Input()vueloIdaRegreso : boolean = false;
+   @Output() HabilitarDescuentos = new EventEmitter<boolean>() ;
+   continuarInfoPasajero : boolean = false;
+   @Input() vueloSeleccionadoIda: Vuelo;
+   @Input() vueloSeleccionadoRegreso: Vuelo;
 
-
-  ciudadOrigen : string='';
   ciudadDestino : string='';
-  fechaIda : Date=new Date;
-  fechaRegreso : Date = new Date;
-  cantidadAdultos : number = 0;
-  cantidadNinos : number = 0;
-  cantidadInfantes : number = 0;
   requiereVisa : boolean = false;
 
   cantidadMillasViaje : number =0;
@@ -61,32 +47,20 @@ export class VuelosComponent implements OnInit {
   cedula : String = '';
   tipoViajero : String = '';
   infoIsFrecuente : String=''; 
-
-  precioTotalViajes : number =0;
   totalPjsRegistrados : number = 0; 
-  totalViajeros : number =0;
+  @Input() totalViajeros : number =0;
 
   constructor(
     private ciudadservice : CiudadService,
-    private rutaservice : RutaService,
-    private vueloservice : VueloService,
     private pasajeroservice : PasajeroService,
     public reservaservice : ReservaService,
     public tiqueteService : TiqueteService,
-  ) { } 
+  ) { }
 
-
+ 
   ngOnInit(): void {
-    this.rutaservice.listarOrigenes().subscribe(result => {
-      this.ciudadesOrigen=result;
-    });
   }
-  //lista las ciudades desde donde se vuela
-   listarIda(){ 
-        this.rutaservice.listarDestinos(this.ciudadOrigen).subscribe(resultado => {
-         this.ciudadesDestino=resultado; 
-  });
-}
+ 
   // habilita la info de pasajero
   pedirDatosPasajeros(){
     this.habilitarDatosUsuario = true;
@@ -136,8 +110,9 @@ this.vaciarCamposInfoPasajero();
 //verificar cantidad de pasajeros registrados
 verificarCantidadPasajerosRegistrados(){
   if(this.totalPjsRegistrados == this.totalViajeros){
+    this.DatosPasajeros.emit( this.datosPasajeros)
+    this.HabilitarDescuentos.emit(true);
     this.habilitarDatosUsuario = false;
-    this.habilitarDescuentos = true;
     this.verificarReglasDeNegocio();
   }
 }
@@ -165,78 +140,14 @@ crearPasajerosYTiquetes(reserva : Reserva){
       });
   }
 }
-
-vaciarInfo(){
-  this.ciudadesOrigen  =[] 
-  this.ciudadesDestino  =[] 
-  this. vuelosIda   =[] 
-  this.vuelosRegreso  = []
-  this.listReserva!=[];
-  this.listPasajeros = [];
-  this.datosPasajeros = [];
-  this.vueloIda  = false;
-  this.vueloIdaRegreso  = false;
-  this.vueloSeleccionadoIda;
-  this.vueloSeleccionadoRegreso;
-
-
-  this.ciudadOrigen ='';
-  this.ciudadDestino ='';
-  this.fechaIda=new Date;
-  this.fechaRegreso  = new Date;
-  this.cantidadAdultos  = 0;
-  this.cantidadNinos  = 0;
-  this.cantidadInfantes  = 0;
-  this.requiereVisa  = false;
-
-  this.cantidadMillasViaje =0;
-
-  this.precioTotalViajes  =0;
-  this.totalPjsRegistrados  = 0; 
-  this.totalViajeros  =0;
-}
-//selecciona un vuelo de ida
-  seleccionarVueloIda(idVuelo : number){
-  this.vueloservice.buscarVuelo(idVuelo).subscribe(vuelo =>{
-    this.vueloSeleccionadoIda= vuelo;
-    if (this.vueloIdaRegreso == true) {
-      let vuelo : DatosVuelo = {
-        origen:this.ciudadDestino,
-        destino:this.ciudadOrigen,
-        fecha:this.fechaRegreso,
-        cantidad:this.totalViajeros,
-        }
-      this.vueloservice.listarVuelos(vuelo).subscribe(res => {
-        this.vuelosRegreso=res;
-      });
-    }
-      this.precioTotalViajes = (Number(this.cantidadAdultos) + Number(this.cantidadInfantes) + Number(this.cantidadNinos)) * this.vueloSeleccionadoIda.precio;
-  });
-  this.verificarCiudadRequiereVisa();
-  }
   //verifica si una ciudad requiere visa 
   verificarCiudadRequiereVisa(){
     this.ciudadservice.verificarRequiereVisa(this.ciudadDestino).subscribe(isVisa => {
       this.requiereVisa = isVisa;
     });
   }
-  //seleccionar vuelo de regreso 
-  seleccionarVueloRegreso(idVuelo : number){
-    this.vueloservice.buscarVuelo(idVuelo).subscribe(vuelo =>{
-      this.vueloSeleccionadoRegreso= vuelo;
-      this.precioTotalViajes = Number(this.precioTotalViajes) + ((Number(this.cantidadAdultos) + Number(this.cantidadInfantes) + Number(this.cantidadNinos)) * (this.vueloSeleccionadoRegreso.precio)) ;  
-    });
-  }
-  //seleccioana tipo de vuelo solo ida
-  SeleccionarTipoVueloIda(){
-  this.vueloIda=true;
-  this.vueloIdaRegreso=false;
-  }
-  // selecciona tipo de vuelo ida y regreso 
-  SeleccionarTipoVueloIdaRegreso(){
-    this.vueloIda=false;
-    this.vueloIdaRegreso= true;
-    }
+
+
   //calcula la cantidad de millas a viajar dependiendo si es vuela ida y regreso o solo ida
   calcularCantidadMillasAViajar(){
     if(this.vueloIdaRegreso){
@@ -246,13 +157,7 @@ vaciarInfo(){
       this.cantidadMillasViaje = (Number)(this.vueloSeleccionadoIda.ruta.millas) ;
     }
   }
-  //lista las reservas existentes
-  listarReservas(){ 
-    this.reservaservice.listarReservas().subscribe(resultado => {
-      this.habilitarReservas = true;
-    this.listReserva=resultado;
-  });
-  } 
+
   //crea reservas
   crearReserva(){
   let tipoVuelo  ='';
@@ -338,19 +243,5 @@ verificarPasajeroFrecuente(cedula : String, descuento : number,nombre:String){
   }}
     this.datosPasajeros.push(infoPasajero);
   }
-  //listar los vuelos con los filtros  
-   listarVuelos(){ 
-    this.totalViajeros = (Number(this.cantidadAdultos) + Number(this.cantidadInfantes) + Number(this.cantidadNinos));
-
-    let vuelo : DatosVuelo = {
-    origen:this.ciudadOrigen,
-    destino:this.ciudadDestino,
-    fecha:this.fechaIda,
-    cantidad:this.totalViajeros,
-    }
-    this.vueloservice.listarVuelos(vuelo).subscribe(res => {
-      this.vuelosIda = res;
-    });
-
-  }
 } 
+

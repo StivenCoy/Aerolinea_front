@@ -1,0 +1,30 @@
+    
+    <div *ngIf="habilitarDescuentos">
+        <div class="tabla">
+          <h1 class="titulo"> Informacion descuentos</h1>
+          <table width="100%" class="miTabla">
+           <tr>
+             <th> Nombre Pasajero </th>
+             <th> Cedula </th>
+             <th>  Frecuencia viajero</th>
+             <th> Descuento </th>
+             <th> Precio Final ida</th>
+             <th> Precio Final Regreso</th>
+           </tr>
+           <ng-container *ngFor="let pasajero of datosPasajeros">
+           <tr>
+             <th>{{pasajero.nombre}}</th>
+             <th>{{pasajero.cedula}}</th>
+             <th>{{pasajero.frecuente}}</th>
+             <th>{{pasajero.descuento}}%</th>
+             <th>{{pasajero.precioIda}}</th>
+             <th>{{pasajero.precioRegreso}}</th>
+            </tr>
+           </ng-container>
+          </table>
+         </div>
+         <div> 
+          <button (click)="comprarViaje()" class="buscarVuelos"> Comprar </button>
+        </div>
+</div>
+

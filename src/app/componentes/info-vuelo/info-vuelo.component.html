@@ -1,0 +1,58 @@
+<div>
+    <div  class = "origen">
+        <label class="ciudadO">Ciudad Origen</label>
+         <select class="form-select" [(ngModel)]="ciudadOrigen"  (change)="listarIda()">
+           <option selected>Seleccionar una ciudad</option>
+             <option *ngFor = "let origen of ciudadesOrigen">{{origen}} </option>
+         </select>
+ 
+         <label class="ciudadD">Ciudad destino</label>
+          <select class="form" [(ngModel)]="ciudadDestino" >
+           <option selected>Seleccionar una ciudad</option>
+              <option *ngFor = "let destinos of ciudadesDestino">{{destinos}} </option>
+          </select>  
+          <button (click)="SeleccionarTipoVueloIda()" class="cVuelo"> Vuelo Ida (OW) </button>
+          <button (click)="SeleccionarTipoVueloIdaRegreso()" class="cVuelo"> Vuelo Ida y Regreso (RT) </button>
+     </div>
+ 
+         <div class="fechas">
+           <label class="fechaO"> Fecha ida  </label>
+           <input type="date" [(ngModel)]="fechaIda">
+         </div>
+         <div *ngIf="vueloIdaRegreso" class="fechas">
+           <label class="fechaO"> Fecha regreso  </label>
+           <input type="date" [(ngModel)]="fechaRegreso">
+         </div>
+ 
+         <div>
+           <div class="personas">
+             <label class="adulto"> Numero de adultos </label>
+             <input type="text" class="lidvuelo" id="vuelo" [(ngModel)]="cantidadAdultos">
+           </div>
+           <div class="personas">
+             <label class="niño"> Numero de niños </label>
+             <input type="text" class="lidvuelo" id="vuelo" [(ngModel)]="cantidadNinos">
+           </div>
+           <div class="personas">
+             <label class="infantes"> Numero de infantes </label>
+             <input type="text" class="lidvuelo" id="vuelo" [(ngModel)]="cantidadInfantes">
+           </div>
+         </div>
+ 
+       <div class="vuelos">
+         <button class="buscarVuelos" (click)="listarVuelos()" > Buscar vuelos </button>
+       </div>
+
+       <app-detalle-vuelos [vuelosIda]="vuelosIda" [vueloRegreso]="vueloRegreso" [vueloIdaRegreso]="vueloIdaRegreso" [habilitarCampos]="true"
+       [cantidadPersonas]="precioTotalViajes"  (VueloSeleccionadoIda)="pedirDatosPasajeros($event)"></app-detalle-vuelos>
+    
+     <app-info-pasajero [habilitarDatosUsuario]="habilitarDatosUsuario" [totalViajeros]="precioTotalViajes" 
+     [vueloIdaRegreso]="vueloIdaRegreso" [vueloSeleccionadoIda]="vueloSeleccionadoIda" 
+     [vueloSeleccionadoRegreso]="vueloSeleccionadoRegreso" (HabilitarDescuentos)="habilitarTablaDescuentos($event)"
+     (DatosPasajeros)="listarDescuentos($event)"></app-info-pasajero>
+     
+     <app-detalle-descuentos [habilitarDescuentos]="habilitarDescuentos" [datosPasajeros]="datosPasajeros"
+     (HabilitarReservas)="habilitarTablaReservas($event)"></app-detalle-descuentos>
+
+    <app-detalle-reservas [habilitarReservas]="habilitarReservas"></app-detalle-reservas>
+</div>
