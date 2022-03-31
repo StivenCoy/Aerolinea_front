@@ -43,7 +43,7 @@
          <button class="buscarVuelos" (click)="listarVuelos()" > Buscar vuelos </button>
        </div>
 
-       <app-detalle-vuelos [vuelosIda]="vuelosIda" [vueloRegreso]="vueloRegreso" [vueloIdaRegreso]="vueloIdaRegreso" [habilitarCampos]="true"
+       <app-detalle-vuelos [vuelosIda]="vuelosIda" [vueloRegreso]="vueloRegreso" [vueloIdaRegreso]="vueloIdaRegreso" [habilitarCampos]="habilitarCampos"
        [cantidadPersonas]="precioTotalViajes"  (VueloSeleccionadoIda)="pedirDatosPasajeros($event)"></app-detalle-vuelos>
     
      <app-info-pasajero [habilitarDatosUsuario]="habilitarDatosUsuario" [totalViajeros]="precioTotalViajes" 

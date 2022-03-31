@@ -26,7 +26,7 @@ export class DetalleVuelosComponent implements OnInit {
    @Input()  cantidadPersonas : number = 0 ;
    vueloIda : boolean = false;
    @Input()  vueloIdaRegreso : boolean = false;
-   @Input() habilitarCampos : boolean = false;
+   @Input() habilitarCampos : boolean;
    requiereVisa : boolean = false;
 
   cantidadMillasViaje : number =0;
