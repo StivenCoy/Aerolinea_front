@@ -11,11 +11,11 @@ export class RutaService {
   ) { }
 
   listarDestinos(nombre:String) {
-    const path = `http://localhost:8080/api/ruta/destinos/${nombre}`;
+    const path = `https://aerolinea-bebold-backend.herokuapp.com/api/ruta/destinos/${nombre}`;
     return this.http.get<object[]>(path);
   }
   listarOrigenes() {
-    const path = `http://localhost:8080/api/ruta/origenes`;
+    const path = `https://aerolinea-bebold-backend.herokuapp.com/api/ruta/origenes`;
     return this.http.get<object[]>(path);
   }
 
