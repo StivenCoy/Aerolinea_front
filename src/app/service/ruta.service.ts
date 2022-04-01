@@ -18,7 +18,4 @@ export class RutaService {
     const path = `https://aerolinea-bebold-backend.herokuapp.com/api/ruta/origenes`;
     return this.http.get<object[]>(path);
   }
-
-
-
 }
