@@ -12,11 +12,11 @@ export class TiqueteService {
   ) { }
 
   crearTiquete(tiquete: Tiquete) {
-    const path = `http://localhost:8080/api/tiquete/crear`;
+    const path = `https://aerolinea-bebold-backend.herokuapp.com/api/tiquete/crear`;
     return this.http.post<Tiquete>(path,tiquete);
   }
   calcularDescuento(idPasajero : String) {
-    const path = `http://localhost:8080/api/tiquete/descuentos?idPasajero=${idPasajero}`;
+    const path = `https://aerolinea-bebold-backend.herokuapp.com/api/tiquete/descuentos?idPasajero=${idPasajero}`;
     return this.http.get<number>(path);
   }
 }

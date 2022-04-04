@@ -14,11 +14,11 @@ export class ReservaService {
 
 
   listarReservas() {
-    const path = 'http://localhost:8080/api/reserva/listard';
+    const path = 'https://aerolinea-bebold-backend.herokuapp.com/api/reserva/listard';
     return this.http.get<ReservaInfo[]>(path);
   }
   crearReserva(reserva: Reserva) {
-    const path = `http://localhost:8080/api/reserva/crear`;
+    const path = `https://aerolinea-bebold-backend.herokuapp.com/api/reserva/crear`;
     return this.http.post<Reserva>(path,reserva);
   }
 }

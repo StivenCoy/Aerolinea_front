@@ -14,11 +14,11 @@ public lVuelos : Object[]=[];
   ) { }
 
   listarVuelos(vuelo : DatosVuelo) {
-    const path = `http://localhost:8080/api/vuelo/lista/`;
+    const path = `https://aerolinea-bebold-backend.herokuapp.com/api/vuelo/lista/`;
     return this.http.post<Vuelos[]>(path, vuelo);
   }
    buscarVuelo(idvuelo:number ) {
-    const path = `http://localhost:8080/api/vuelo/buscar/${idvuelo}`;
+    const path = `https://aerolinea-bebold-backend.herokuapp.com/api/vuelo/buscar/${idvuelo}`;
      return this.http.get<Vuelo>(path);
   }
 

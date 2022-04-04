@@ -11,7 +11,7 @@ export class CiudadService {
   ) { }
 
   verificarRequiereVisa(nombre : String) {
-    const path = `http://localhost:8080/api/ciudad/visa/${nombre}`;
+    const path = `https://aerolinea-bebold-backend.herokuapp.com/api/ciudad/visa/${nombre}`;
     return this.http.get<boolean>(path);
   }
 }
