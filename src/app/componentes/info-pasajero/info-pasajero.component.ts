@@ -23,12 +23,13 @@ export class InfoPasajeroComponent implements OnInit {
    datosPasajeros : info_pasajero[] = []
    @Output() DatosPasajeros = new EventEmitter<info_pasajero[]>() ;
    @Input() habilitarDatosUsuario : boolean;
+   habilitarCampos : boolean = false; 
    vueloIda : boolean = false;
    @Input()vueloIdaRegreso : boolean = false;
    @Output() HabilitarDescuentos = new EventEmitter<boolean>() ;
    continuarInfoPasajero : boolean = false;
-   @Input() vueloSeleccionadoIda: Vuelo;
-   @Input() vueloSeleccionadoRegreso: Vuelo;
+   @Input() vueloSeleccionadoIda: Vuelo | null;
+   @Input() vueloSeleccionadoRegreso: Vuelo | null ;
 
   ciudadDestino : string='';
   requiereVisa : boolean = false;
@@ -63,7 +64,7 @@ export class InfoPasajeroComponent implements OnInit {
  
   // habilita la info de pasajero
   pedirDatosPasajeros(){
-    this.habilitarDatosUsuario = true;
+    this.habilitarCampos = true;
     this.calcularCantidadMillasAViajar();
   }
   //metodo para buscar un pasajero
@@ -113,6 +114,7 @@ verificarCantidadPasajerosRegistrados(){
     this.DatosPasajeros.emit( this.datosPasajeros)
     this.HabilitarDescuentos.emit(true);
     this.habilitarDatosUsuario = false;
+    this.habilitarCampos = false;
     this.verificarReglasDeNegocio();
   }
 }
@@ -150,10 +152,10 @@ crearPasajerosYTiquetes(reserva : Reserva){
 
   //calcula la cantidad de millas a viajar dependiendo si es vuela ida y regreso o solo ida
   calcularCantidadMillasAViajar(){
-    if(this.vueloIdaRegreso){
+    if(this.vueloIdaRegreso && this.vueloSeleccionadoIda != null && this.vueloSeleccionadoRegreso != null){
       this.cantidadMillasViaje = (Number)(this.vueloSeleccionadoIda.ruta.millas) + (Number)(this.vueloSeleccionadoRegreso.ruta.millas)
     }
-    else {
+    else if(this.vueloSeleccionadoIda != null){
       this.cantidadMillasViaje = (Number)(this.vueloSeleccionadoIda.ruta.millas) ;
     }
   }
@@ -223,7 +225,7 @@ verificarPasajeroFrecuente(cedula : String, descuento : number,nombre:String){
   //Crear informacion de cada pasajero 
   crearInfoPasajero(descuento : number,cedula:String, nombre:String){
     let infoPasajero :info_pasajero;
-    if(this.vueloIdaRegreso == true){
+    if(this.vueloIdaRegreso == true && this.vueloSeleccionadoIda != null && this.vueloSeleccionadoRegreso != null){
     infoPasajero = {
       nombre : nombre,
       cedula : cedula,
@@ -231,8 +233,10 @@ verificarPasajeroFrecuente(cedula : String, descuento : number,nombre:String){
       descuento : descuento,
       precioIda : ((-descuento + 100) * this.vueloSeleccionadoIda.precio) / 100,
       precioRegreso : ((-descuento + 100) * this.vueloSeleccionadoRegreso.precio) / 100
-    }}
-    else{
+    }
+    this.datosPasajeros.push(infoPasajero);
+  }
+    else if(this.vueloSeleccionadoIda != null){
     infoPasajero = {
       nombre : nombre,
       cedula : cedula,
@@ -240,8 +244,10 @@ verificarPasajeroFrecuente(cedula : String, descuento : number,nombre:String){
       descuento : descuento,
       precioIda : ((-descuento + 100) * this.vueloSeleccionadoIda.precio) / 100,
       precioRegreso : 0
-  }}
-    this.datosPasajeros.push(infoPasajero);
+  } 
+  this.datosPasajeros.push(infoPasajero);
+}
+    
   }
 } 
 

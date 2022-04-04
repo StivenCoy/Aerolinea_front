@@ -18,10 +18,10 @@ export class DetalleVuelosComponent implements OnInit {
    @Input() vuelosRegreso : Vuelos[];
    vuelosSeleccionado : Vuelo[] = [];
    @Output() VueloSeleccionadoIda = new EventEmitter<Vuelo[]>() ;
-   vueloSeleccionadoIda: Vuelo;
+   @Input() vueloSeleccionadoIda: Vuelo | null;
    @Output() VueloSeleccionadoRegreso: EventEmitter<any> = new EventEmitter();
-   vueloSeleccionadoRegreso: Vuelo;
-   @Input()  vueloRegreso : DatosVuelo ;
+   @Input() vueloSeleccionadoRegreso: Vuelo| null;
+   @Input()  vueloRegreso : DatosVuelo | null;
    habilitarVuelta : boolean = false;
    @Input()  cantidadPersonas : number = 0 ;
    vueloIda : boolean = false;
@@ -69,7 +69,7 @@ vaciarInfo(){
       this.vueloSeleccionadoIda= vuelo;
       this.vuelosSeleccionado.push(this.vueloSeleccionadoIda);
     }
-    if(this.vueloIdaRegreso == true){
+    if(this.vueloIdaRegreso == true && this.vueloRegreso !=null){
 
       this.vueloservice.listarVuelos(this.vueloRegreso).subscribe(res => {
         this.vuelosIda=res;

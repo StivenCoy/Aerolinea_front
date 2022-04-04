@@ -26,10 +26,9 @@ export class InfoVueloComponent implements OnInit {
    vuelosRegreso : Vuelos[] = []
    listReserva : ReservaInfo[];
    listPasajeros : Pasajero[]= [];
-   tiposPjs : String[] = ["Adulto","Niño", "Infante"]; 
    datosPasajeros : info_pasajero[] = []
    @Output() VueloRegreso: EventEmitter<any> = new EventEmitter();
-   vueloRegreso : DatosVuelo ;
+   vueloRegreso : DatosVuelo | null ;
    @Output() CantidadPersonas: EventEmitter<any> = new EventEmitter();
 
    habilitarDatosUsuario : boolean = false;
@@ -38,13 +37,14 @@ export class InfoVueloComponent implements OnInit {
    vueloIdaRegreso : boolean = false;
    habilitarDescuentos : boolean = false;
    habilitarReservas : boolean = false;
-   vueloSeleccionadoIda: Vuelo;
-   vueloSeleccionadoRegreso: Vuelo;
+   vueloSeleccionadoIda: Vuelo| null;
+   vueloSeleccionadoRegreso: Vuelo| null;
    habilitarCampos : boolean = false;
    @Output() HabilitarCampos: EventEmitter<any> = new EventEmitter();
    @Output() CiudadOrigen: EventEmitter<any> = new EventEmitter();
   ciudadOrigen : string='';
   ciudadDestino : string='';
+  tipoVuelo : string;
   fechaIda : Date=new Date;
   fechaRegreso : Date = new Date;
   cantidadAdultos : number = 0;
@@ -75,10 +75,40 @@ export class InfoVueloComponent implements OnInit {
   }
   habilitarTablaReservas(habilitarReserva : boolean):void {
     this.habilitarReservas = habilitarReserva;
+    this.vaciarCamposInfoPasajero();
   }
   listarDescuentos(descuentos :info_pasajero[]){
     this.datosPasajeros=descuentos;
   }
+
+  //limpiar datos del formulario de pasajero
+vaciarCamposInfoPasajero(){
+  let vuelo : Vuelo ;
+  this.listPasajeros = [];
+  this.datosPasajeros = []
+  this.vueloRegreso = null ;
+  this.habilitarDatosUsuario = false;
+  this.vueloIda = false;
+  this.vueloIdaRegreso = false;
+  this.habilitarDescuentos  = false;
+ // habilitarReservas : boolean = false;
+ this.vueloSeleccionadoIda = null;
+ this.vueloSeleccionadoRegreso= null;
+ this.habilitarCampos= false;
+ this.ciudadOrigen ='';
+ this.ciudadDestino ='';
+ this.tipoVuelo ='';
+ this.fechaIda =new Date;
+ this.fechaRegreso = new Date;
+ this.cantidadAdultos = 0;
+ this.cantidadNinos = 0;
+ this.cantidadInfantes = 0;
+ this.requiereVisa  = false;
+ this.cantidadMillasViaje  =0;
+ this.precioTotalViajes  =0;
+ this.totalPjsRegistrados  = 0; 
+ this.totalViajeros  =0;
+}
 
   //lista las ciudades desde donde se vuela
    listarIda(){ 
@@ -99,10 +129,10 @@ export class InfoVueloComponent implements OnInit {
 
   //calcula la cantidad de millas a viajar dependiendo si es vuela ida y regreso o solo ida
   calcularCantidadMillasAViajar(){
-    if(this.vueloIdaRegreso){
+    if(this.vueloIdaRegreso && this.vueloSeleccionadoIda !=null && this.vueloSeleccionadoRegreso != null){
       this.cantidadMillasViaje = (Number)(this.vueloSeleccionadoIda.ruta.millas) + (Number)(this.vueloSeleccionadoRegreso.ruta.millas)
     }
-    else {
+    else if(this.vueloSeleccionadoIda !=null) {
       this.cantidadMillasViaje = (Number)(this.vueloSeleccionadoIda.ruta.millas) ;
     }
   }
@@ -119,7 +149,6 @@ export class InfoVueloComponent implements OnInit {
   this.vueloIda=true;
   this.vueloIdaRegreso=false;
   }
-  
   // selecciona tipo de vuelo ida y regreso 
   SeleccionarTipoVueloIdaRegreso(){
     this.vueloIda=false;

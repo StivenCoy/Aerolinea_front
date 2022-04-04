@@ -40,6 +40,7 @@ export class DetalleDescuentosComponent implements OnInit {
     this.crearReserva();
     console.log('su compra se realizo correctamente');
     this.HabilitarReservas.emit(true);
+    this.habilitarDescuentos = false;
     //this.listReserva;
   }
 

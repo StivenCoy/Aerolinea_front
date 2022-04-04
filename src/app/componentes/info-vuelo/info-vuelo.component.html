@@ -1,4 +1,5 @@
 <div>
+  <h1 class="titulo">Vuela Tranquilo con Wingo</h1>
     <div  class = "origen">
         <label class="ciudadO">Ciudad Origen</label>
          <select class="form-select" [(ngModel)]="ciudadOrigen"  (change)="listarIda()">
@@ -44,12 +45,15 @@
        </div>
 
        <app-detalle-vuelos [vuelosIda]="vuelosIda" [vueloRegreso]="vueloRegreso" [vueloIdaRegreso]="vueloIdaRegreso" [habilitarCampos]="habilitarCampos"
-       [cantidadPersonas]="precioTotalViajes"  (VueloSeleccionadoIda)="pedirDatosPasajeros($event)"></app-detalle-vuelos>
+       [cantidadPersonas]="precioTotalViajes"  (VueloSeleccionadoIda)="pedirDatosPasajeros($event)"
+       [vueloSeleccionadoIda]="vueloSeleccionadoIda" [vueloSeleccionadoRegreso]="vueloSeleccionadoRegreso"></app-detalle-vuelos>
     
-     <app-info-pasajero [habilitarDatosUsuario]="habilitarDatosUsuario" [totalViajeros]="precioTotalViajes" 
-     [vueloIdaRegreso]="vueloIdaRegreso" [vueloSeleccionadoIda]="vueloSeleccionadoIda" 
-     [vueloSeleccionadoRegreso]="vueloSeleccionadoRegreso" (HabilitarDescuentos)="habilitarTablaDescuentos($event)"
-     (DatosPasajeros)="listarDescuentos($event)"></app-info-pasajero>
+       
+        <app-info-pasajero [habilitarDatosUsuario]="habilitarDatosUsuario" [totalViajeros]="precioTotalViajes" 
+        [vueloIdaRegreso]="vueloIdaRegreso" [vueloSeleccionadoIda]="vueloSeleccionadoIda" 
+        [vueloSeleccionadoRegreso]="vueloSeleccionadoRegreso" (HabilitarDescuentos)="habilitarTablaDescuentos($event)"
+        (DatosPasajeros)="listarDescuentos($event)"></app-info-pasajero>
+       
      
      <app-detalle-descuentos [habilitarDescuentos]="habilitarDescuentos" [datosPasajeros]="datosPasajeros"
      (HabilitarReservas)="habilitarTablaReservas($event)"></app-detalle-descuentos>

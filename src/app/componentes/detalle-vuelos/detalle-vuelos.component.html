@@ -7,13 +7,16 @@
         <h1 class="titulo"> Datos vuelos Ida</h1>
       </div>
         <table width="100%" class="miTabla">
+          <thead>
          <tr>
-           <th> Hora vuelo </th>
-           <th> Duracion </th>
-           <th> Tipo Vuelo </th>
-           <th> Precio Persona </th>
-           <th> Seleccionar Vuelo </th>
+           <th scope="col"> Hora vuelo </th>
+           <th scope="col"> Duracion </th>
+           <th scope="col"> Tipo Vuelo </th>
+           <th scope="col"> Precio Persona </th>
+           <th scope="col"> Seleccionar Vuelo </th>
          </tr>
+        </thead>
+        <tbody>
          <ng-container *ngFor="let vuelo of vuelosIda">
          <tr>
            <th>{{vuelo.hora}}</th>
@@ -25,6 +28,7 @@
            </th>
           </tr>
          </ng-container>
+        </tbody>
         </table>
        </div>
 </div>

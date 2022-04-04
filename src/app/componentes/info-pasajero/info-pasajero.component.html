@@ -1,9 +1,9 @@
 <div>
- <div *ngIf="continuarInfoPasajero"> 
+ <div *ngIf="habilitarDatosUsuario"> 
   <button (click)="pedirDatosPasajeros()" class="buscarVuelos"> Continuar </button>
 </div>
 
-    <div *ngIf="habilitarDatosUsuario" class="formurario">
+    <div *ngIf="habilitarCampos"  class="formurario">
         <h1> Datos Pasajero</h1>
         <div class="dato1">
           <label class="cedula"> cedula </label>

@@ -7,7 +7,6 @@ import { ServiceComponent } from './service/service.component';
 import { VuelosComponent } from './vuelos/vuelos.component';
 import { FormsModule } from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
-import { PasajeroComponent } from './pasajero/pasajero.component';
 import { InfoVueloComponent } from './componentes/info-vuelo/info-vuelo.component';
 import { DetalleVuelosComponent } from './componentes/detalle-vuelos/detalle-vuelos.component';
 import { InfoPasajeroComponent } from './componentes/info-pasajero/info-pasajero.component';
@@ -21,7 +20,6 @@ import { DetalleReservasComponent } from './componentes/detalle-reservas/detalle
     InterfacesComponent,
     ServiceComponent,
     VuelosComponent,
-    PasajeroComponent,
     InfoVueloComponent,
     DetalleVuelosComponent,
     InfoPasajeroComponent,
