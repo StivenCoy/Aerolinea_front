@@ -1,45 +1,11 @@
-.personas,.ciudadO, .ciudadD, .precio, .cVuelo{
-    padding: 5px;
-    margin: 5px;  
-    width: 180px;
-}
-.titulo{
-    margin-left: 40%;
-}
-.empleados{
-    background-color: rgb(218, 221, 228);
-}
-.origen{
-    margin-left: 13%;
-    padding: 0.5%;
-    margin: 0.5;
-}
-.lidvuelo{
-    width: 30px;
-    height: 20px;
-}
-.fechas, .fecha{
-    margin-left: 40%;
-    padding: 0.5%;
-    margin: 0.5;
-}
-.personas,  .formurario,.precio{
-    width: 50%;
-    height: 50%;
-    margin-left: 40%;
-}
-.dato1{
-    padding: 5px;
-    margin: 5px;
-    padding:15px;
-}
- .buscarVuelos, .cpasajero{
+ .comprarViaje{
     padding: 5px;
     margin: 5px;
     width: 150px;
     margin-left: 40%;
-   
-   
+}
+.titulo{
+    margin-left: 40%;
 }
 .miTabla{
     border-bottom: 1px;

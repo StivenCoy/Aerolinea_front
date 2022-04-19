@@ -1,45 +1,42 @@
 <div>
- <div *ngIf="habilitarDatosUsuario"> 
-  <button (click)="pedirDatosPasajeros()" class="buscarVuelos"> Continuar </button>
-</div>
+  <div *ngIf="habilitarDatosUsuario"> 
+    <button (click)="pedirDatosPasajeros()" class="habilitarDatosPasajero"> Continuar </button>
+  </div>
 
     <div *ngIf="habilitarCampos"  class="formurario">
-        <h1> Datos Pasajero</h1>
-        <div class="dato1">
-          <label class="cedula"> cedula </label>
+        <h1> Datos del Pasajero # {{totalPjsRegistrados+1}} </h1>
+        <div class="dato">
+          <label class="cedula"> Cedula </label>
           <input type="text" class="lcedula"  [(ngModel)]="cedula">
+          <button class="bus" (click)="buscarPasajero()" > buscar Pasajero </button>
         </div>
 
-        <div class="dato1">
-            <button class="bus" (click)="buscarPasajero()" > buscar Pasajero </button>
-        </div> 
-
-         <div class="dato1"> 
+        <div class="dato"> 
           <label class="nPasaporte"> Id pasaporte </label>
           <input type="text" class="lnPasaporte"  [(ngModel)]="pasaporte">
         </div>
     
-        <div class="dato1">
+        <div class="dato">
           <label class="nombre"> Nombre </label>
           <input type="text" class="lnombre"  [(ngModel)]="nombre">
         </div>
     
-        <div class="dato1">
+        <div class="dato">
           <label class="apellido"> Apellido </label>
           <input type="text" class="lapellido"  [(ngModel)]="apellido">
         </div>
     
-        <div class="dato1">
+        <div class="dato">
           <label class="telefono"> Telefono </label>
           <input type="text" class="ltelefono"  [(ngModel)]="telefono">
         </div>
     
-        <div class="dato1">
+        <div class="dato">
           <label class="correo"> Correo </label>
           <input type="text" class="lcorreo"  [(ngModel)]="correo">
         </div>
     
-        <div class="dato1">
+        <div class="dato">
           <label class="edad"> Edad </label>
           <input type="text" class="ledad"  [(ngModel)]="edad">
         </div>
@@ -47,17 +44,17 @@
         <div *ngIf="requiereVisa">
           <label class="visa"> Visa </label>
           <input type="date" [(ngModel)]="visa">
-          </div>
+        </div>
 
           <div  class = "dato1">
-            <label class="tipoPasajero">Tipo de pasajero</label>
-             <select class="form-select" [(ngModel)]="tipoViajero">
+            <label class="tipoPasajero">Pasajero</label>
+             <select class="ltipoPasajero" [(ngModel)]="tipoViajero">
                <option selected>Seleccionar un tipo</option>
                  <option *ngFor = "let tipo of tiposPjs">{{tipo}} </option>
              </select>
           </div>
         <div> 
-          <button (click)="registrarPasajero()" class="vuelos"> Continuar </button>
+          <button (click)="registrarPasajero()" class="registrarPasajero"> Registrar Pasajero </button>
         </div>   
       </div>
 </div>

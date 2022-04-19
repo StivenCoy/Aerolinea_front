@@ -1,4 +1,5 @@
-<div>
+<div class="pag">
+  
   <h1 class="titulo">Vuela Tranquilo con Wingo</h1>
     <div  class = "origen">
         <label class="ciudadO">Ciudad Origen</label>
@@ -6,7 +7,7 @@
            <option selected>Seleccionar una ciudad</option>
              <option *ngFor = "let origen of ciudadesOrigen">{{origen}} </option>
          </select>
- 
+         
          <label class="ciudadD">Ciudad destino</label>
           <select class="form" [(ngModel)]="ciudadDestino" >
            <option selected>Seleccionar una ciudad</option>
@@ -14,29 +15,29 @@
           </select>  
           <button (click)="SeleccionarTipoVueloIda()" class="cVuelo"> Vuelo Ida (OW) </button>
           <button (click)="SeleccionarTipoVueloIdaRegreso()" class="cVuelo"> Vuelo Ida y Regreso (RT) </button>
-     </div>
+    </div>
  
          <div class="fechas">
-           <label class="fechaO"> Fecha ida  </label>
-           <input type="date" [(ngModel)]="fechaIda">
+           <label class="fechaOrigen">Fecha ida  </label>
+           <input type="date" class="fechaO" [(ngModel)]="fechaIda">
          </div>
          <div *ngIf="vueloIdaRegreso" class="fechas">
-           <label class="fechaO"> Fecha regreso  </label>
-           <input type="date" [(ngModel)]="fechaRegreso">
+           <label class="fechaRegreso"> Fecha regreso  </label>
+           <input type="date" class="fechaD" [(ngModel)]="fechaRegreso">
          </div>
  
          <div>
            <div class="personas">
              <label class="adulto"> Numero de adultos </label>
-             <input type="text" class="lidvuelo" id="vuelo" [(ngModel)]="cantidadAdultos">
+             <input type="number" class="lidvuelo" id="vuelo" [(ngModel)]="cantidadAdultos">
            </div>
            <div class="personas">
              <label class="niño"> Numero de niños </label>
-             <input type="text" class="lidvuelo" id="vuelo" [(ngModel)]="cantidadNinos">
+             <input type="number" class="Nniños" id="vuelo" [(ngModel)]="cantidadNinos">
            </div>
            <div class="personas">
-             <label class="infantes"> Numero de infantes </label>
-             <input type="text" class="lidvuelo" id="vuelo" [(ngModel)]="cantidadInfantes">
+             <label class="infantes"> Numero de infantes</label>
+             <input type="number" class="lidvuelo" id="vuelo" [(ngModel)]="cantidadInfantes">
            </div>
          </div>
  

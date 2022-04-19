@@ -1,27 +1,40 @@
 .personas,.ciudadO, .ciudadD, .precio, .cVuelo{
     padding: 5px;
-    margin: 5px;  
+    margin: 10px;  
     width: 180px;
 }
 .titulo{
-    margin-left: 40%;
+    margin: 1%;
+    padding: 5px;
+    margin-left: 30%;
 }
-.empleados{
-    background-color: rgb(218, 221, 228);
+.form-select, .form{
+    width: 180px;
+    height: 30px;
+}
+.fechaO, .fechaD{
+    width: 110px;
+    height: 20px;
+    margin-left: 70px;
+}
+.pag{
+    background-color: rgb(189, 234, 245);
+    width: 100%;
+    height: 100%;
+    /* height: 690px; */
 }
 .origen{
     margin-left: 13%;
     padding: 0.5%;
     margin: 0.5;
 }
-.lidvuelo{
-    width: 30px;
+.lidvuelo, .Nniños{
+    width: 110px;
     height: 20px;
+    margin-left: 5px;
 }
 .fechas, .fecha{
     margin-left: 40%;
-    padding: 0.5%;
-    margin: 0.5;
 }
 .personas,  .formurario,.precio{
     width: 50%;
@@ -42,17 +55,9 @@
    
 }
 .miTabla{
-    border-bottom: 1px;
-    border-bottom-left-radius: 1px;
-    border-bottom-style:solid ; 
-    border-bottom-color: rgb(5, 5, 5);
-    border-top-color: rgb(22, 21, 21);
-    border-top-style: solid;
-    border-top-width: 1px;
-    border-right-color: rgb(14, 12, 12);
-    border-right-style: solid;
-    border-right-width: 1px;
-    border-left-color: rgb(20, 18, 18);
-    border-left-style: solid;
-    border-left-width: 1px;
+    border: 1px solid grey;
+    border-collapse: collapse;
+}
+.Nniños{
+    margin-left: 16px;
 }
