@@ -300,11 +300,11 @@ verificarPasajeroFrecuente(cedula : String, descuento : number,nombre:String){
     });
 } 
  //calcula el descuento de un pasajero
- calcularDescuento(cedula : String, nombre : String) { 
+ calcularDescuento(pasajero : Pasajero, nombre : String) { 
    let descuento: number;
-  this.tiqueteService.calcularDescuento(cedula).subscribe(desc => {
+  this.tiqueteService.calcularDescuento(pasajero).subscribe(desc => {
   descuento = desc;
-  this.verificarPasajeroFrecuente(cedula,descuento,nombre);
+  this.verificarPasajeroFrecuente(pasajero.cedula,descuento,nombre);
 });
 }
 //Verifica todas las reglas de negocio
@@ -312,7 +312,7 @@ verificarPasajeroFrecuente(cedula : String, descuento : number,nombre:String){
     let descuentoPasajero : number =0;
     let frecuente : String = '';
     for (let i = 0; i < this.listPasajeros.length; i++) {
-     this.calcularDescuento(this.listPasajeros[i].cedula,this.listPasajeros[i].nombre);
+     this.calcularDescuento(this.listPasajeros[i],this.listPasajeros[i].nombre);
   } 
   }
   //Crear informacion de cada pasajero 

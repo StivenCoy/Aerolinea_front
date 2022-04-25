@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Tiquete } from '../interfaces/tiquete';
+import { Pasajero } from '../interfaces/pasajero';
 
 @Injectable({
   providedIn: 'root'
@@ -15,8 +16,8 @@ export class TiqueteService {
     const path = `https://aerolinea-bebold-backend.herokuapp.com/api/tiquete/crear`;
     return this.http.post<Tiquete>(path,tiquete);
   }
-  calcularDescuento(idPasajero : String) {
-    const path = `https://aerolinea-bebold-backend.herokuapp.com/api/tiquete/descuentos?idPasajero=${idPasajero}`;
-    return this.http.get<number>(path);
+  calcularDescuento(pasajero : Pasajero) {
+    const path = `https://aerolinea-bebold-backend.herokuapp.com/api/tiquete/descuentos`;
+    return this.http.post<number>(path,pasajero);
   }
 }
