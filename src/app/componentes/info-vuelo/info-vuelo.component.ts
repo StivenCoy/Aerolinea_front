@@ -80,6 +80,9 @@ export class InfoVueloComponent implements OnInit {
   listarDescuentos(descuentos :info_pasajero[]){
     this.datosPasajeros=descuentos;
   }
+  listarPasajeros(pasajeros :Pasajero[]){
+    this.listPasajeros=pasajeros;
+  }
 
   //limpiar datos del formulario de pasajero
 vaciarCamposInfoPasajero(){

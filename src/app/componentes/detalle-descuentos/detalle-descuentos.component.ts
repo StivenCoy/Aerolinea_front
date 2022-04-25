@@ -16,15 +16,15 @@ import { EventEmitter } from '@angular/core';
 })
 export class DetalleDescuentosComponent implements OnInit {
 
-   listPasajeros : Pasajero[]= [];
+   @Input() listPasajeros : Pasajero[]= [];
    @Input() datosPasajeros : info_pasajero[] ;
 
    vueloIda : boolean = false;
    vueloIdaRegreso : boolean = false;
    @Input()habilitarDescuentos : boolean;
    @Output() HabilitarReservas = new EventEmitter<boolean>() ;
-   vueloSeleccionadoIda!: Vuelo;
-   vueloSeleccionadoRegreso!: Vuelo;
+   @Input() vueloSeleccionadoIda: Vuelo| null;
+   @Input() vueloSeleccionadoRegreso: Vuelo| null;
 
   constructor(
     public reservaservice : ReservaService,
@@ -61,14 +61,17 @@ export class DetalleDescuentosComponent implements OnInit {
       }
       this.reservaservice.crearReserva(reserva).subscribe(reserva => {
         reserva=reserva;
+        console.log(reserva)
         this.crearPasajerosYTiquetes(reserva);
       });
     }
 
     //guarda los pasajeros en la base de datos
 crearPasajerosYTiquetes(reserva : Reserva){
+  console.log('pasajero ', this.listPasajeros.length)
   for (let i = 0; i < this.listPasajeros.length; i++) {
       this.pasajeroservice.crearPasajero(this.listPasajeros[i]).subscribe(pasajero =>{
+        console.log(pasajero)
         if(this.vueloIdaRegreso == true){
           this.crearTiquete(pasajero,reserva, this.datosPasajeros[i].precioRegreso);
         }

@@ -53,11 +53,13 @@
         <app-info-pasajero [habilitarDatosUsuario]="habilitarDatosUsuario" [totalViajeros]="precioTotalViajes" 
         [vueloIdaRegreso]="vueloIdaRegreso" [vueloSeleccionadoIda]="vueloSeleccionadoIda" 
         [vueloSeleccionadoRegreso]="vueloSeleccionadoRegreso" (HabilitarDescuentos)="habilitarTablaDescuentos($event)"
-        (DatosPasajeros)="listarDescuentos($event)"></app-info-pasajero>
+        (listaPasajeros)="listarPasajeros($event)" (DatosPasajeros)="listarDescuentos($event)"></app-info-pasajero>
        
      
      <app-detalle-descuentos [habilitarDescuentos]="habilitarDescuentos" [datosPasajeros]="datosPasajeros"
-     (HabilitarReservas)="habilitarTablaReservas($event)"></app-detalle-descuentos>
+     [listPasajeros]="listPasajeros"
+     (HabilitarReservas)="habilitarTablaReservas($event)"
+     [vueloSeleccionadoIda]="vueloSeleccionadoIda" [vueloSeleccionadoRegreso]="vueloSeleccionadoRegreso"></app-detalle-descuentos>
 
     <app-detalle-reservas [habilitarReservas]="habilitarReservas"></app-detalle-reservas>
 </div>

@@ -18,6 +18,7 @@ import { EventEmitter } from '@angular/core';
 export class InfoPasajeroComponent implements OnInit {
 
   ciudadesOrigen : Object[] =[] 
+  @Output() listaPasajeros = new EventEmitter<Pasajero[]>() ;
    listPasajeros : Pasajero[]= [];
    tiposPjs : String[] = ["Adulto","Niño", "Infante"]; 
    datosPasajeros : info_pasajero[] = []
@@ -81,6 +82,7 @@ export class InfoPasajeroComponent implements OnInit {
           this.visa = pasajero.fecha;
           this.tipoViajero =pasajero.tipoViajero;
           this.listPasajeros.push(pasajero);
+          
           this.totalPjsRegistrados += 1;
           this.verificarCantidadPasajerosRegistrados();
           this.vaciarCamposInfoPasajero();
@@ -107,12 +109,14 @@ this.listPasajeros.push(pasajero);
 this.totalPjsRegistrados += 1;
 this.verificarCantidadPasajerosRegistrados();
 this.vaciarCamposInfoPasajero();
+console.log('cantidad pasajeros', this.listPasajeros)
 }
 //verificar cantidad de pasajeros registrados
 verificarCantidadPasajerosRegistrados(){
   if(this.totalPjsRegistrados == this.totalViajeros){
     this.DatosPasajeros.emit( this.datosPasajeros)
     this.HabilitarDescuentos.emit(true);
+    this.listaPasajeros.emit(this.listPasajeros);
     this.habilitarDatosUsuario = false;
     this.habilitarCampos = false;
     this.verificarReglasDeNegocio();
