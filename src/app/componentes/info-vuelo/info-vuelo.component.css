@@ -12,10 +12,15 @@
     width: 180px;
     height: 30px;
 }
-.fechaO, .fechaD{
-    width: 110px;
-    height: 20px;
-    margin-left: 70px;
+.fechaO{
+    width: 115px;
+    height: 25px;
+    margin-left: 62px;
+}
+.fechaD{
+    width: 115px;
+    height: 25px;
+    margin-left: 35px;
 }
 .pag{
     background-color: rgb(189, 234, 245);
@@ -35,6 +40,7 @@
 }
 .fechas, .fecha{
     margin-left: 40%;
+    padding: 0.5%;
 }
 .personas,  .formurario,.precio{
     width: 50%;

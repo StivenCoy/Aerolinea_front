@@ -21,7 +21,7 @@
            <label class="fechaOrigen">Fecha ida  </label>
            <input type="date" class="fechaO" [(ngModel)]="fechaIda">
          </div>
-         <div *ngIf="vueloIdaRegreso" class="fechas">
+         <div *ngIf="vueloIdaRegreso" class="fechas" >
            <label class="fechaRegreso"> Fecha regreso  </label>
            <input type="date" class="fechaD" [(ngModel)]="fechaRegreso">
          </div>
@@ -57,9 +57,9 @@
        
      
      <app-detalle-descuentos [habilitarDescuentos]="habilitarDescuentos" [datosPasajeros]="datosPasajeros"
-     [listPasajeros]="listPasajeros"
+     [listPasajeros]="listPasajeros" [vueloIda]="vueloIda" [vueloIdaRegreso]="vueloIdaRegreso"
      (HabilitarReservas)="habilitarTablaReservas($event)"
      [vueloSeleccionadoIda]="vueloSeleccionadoIda" [vueloSeleccionadoRegreso]="vueloSeleccionadoRegreso"></app-detalle-descuentos>
 
-    <app-detalle-reservas [habilitarReservas]="habilitarReservas"></app-detalle-reservas>
+    <app-detalle-reservas ></app-detalle-reservas>
 </div>

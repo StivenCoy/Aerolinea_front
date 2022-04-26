@@ -16,12 +16,12 @@ import { EventEmitter } from '@angular/core';
 })
 export class DetalleDescuentosComponent implements OnInit {
 
-   @Input() listPasajeros : Pasajero[]= [];
-   @Input() datosPasajeros : info_pasajero[] ;
+   @Input() listPasajeros : Pasajero[];
+   @Input() datosPasajeros : info_pasajero[];
 
-   vueloIda : boolean = false;
-   vueloIdaRegreso : boolean = false;
-   @Input()habilitarDescuentos : boolean;
+   @Input() vueloIda : boolean ;
+   @Input() vueloIdaRegreso : boolean ;
+   @Input() habilitarDescuentos : boolean;
    @Output() HabilitarReservas = new EventEmitter<boolean>() ;
    @Input() vueloSeleccionadoIda: Vuelo| null;
    @Input() vueloSeleccionadoRegreso: Vuelo| null;
@@ -29,7 +29,7 @@ export class DetalleDescuentosComponent implements OnInit {
   constructor(
     public reservaservice : ReservaService,
     public tiqueteService : TiqueteService,
-    private pasajeroservice : PasajeroService,
+    public  pasajeroservice : PasajeroService,
   ) { }
 
  
@@ -37,11 +37,8 @@ export class DetalleDescuentosComponent implements OnInit {
   }
 
   comprarViaje(){
+    console.log('ingreso a descuentos ',this.listPasajeros)
     this.crearReserva();
-    console.log('su compra se realizo correctamente');
-    this.HabilitarReservas.emit(true);
-    this.habilitarDescuentos = false;
-    //this.listReserva;
   }
 
   crearReserva(){
@@ -61,25 +58,26 @@ export class DetalleDescuentosComponent implements OnInit {
       }
       this.reservaservice.crearReserva(reserva).subscribe(reserva => {
         reserva=reserva;
-        console.log(reserva)
         this.crearPasajerosYTiquetes(reserva);
       });
     }
 
     //guarda los pasajeros en la base de datos
 crearPasajerosYTiquetes(reserva : Reserva){
-  console.log('pasajero ', this.listPasajeros.length)
   for (let i = 0; i < this.listPasajeros.length; i++) {
       this.pasajeroservice.crearPasajero(this.listPasajeros[i]).subscribe(pasajero =>{
-        console.log(pasajero)
         if(this.vueloIdaRegreso == true){
           this.crearTiquete(pasajero,reserva, this.datosPasajeros[i].precioRegreso);
         }
-        console.log(this.datosPasajeros.length);
         this.crearTiquete(pasajero,reserva, this.datosPasajeros[i].precioIda);
       });
+    //   if(i == this.listPasajeros.length-1){
+    //     this.HabilitarReservas.emit(true);
+    //  }
   }
+  this.habilitarDescuentos = false;
 }
+
 
 
 //corregir el precio de cada tiquete

@@ -11,7 +11,8 @@ import { ReservaInfo } from 'src/app/interfaces/reservaInfo';
 export class DetalleReservasComponent implements OnInit {
 
    listReserva! : ReservaInfo[];
-   @Input() habilitarReservas : boolean = false;
+   habilitarReservas : boolean = false;
+   habilitarTabla : boolean = false;
 
   constructor(
     public reservaservice : ReservaService,
@@ -24,7 +25,7 @@ export class DetalleReservasComponent implements OnInit {
   //lista las reservas existentes
   listarReservas(){ 
     this.reservaservice.listarReservas().subscribe(resultado => {
-      this.habilitarReservas = true;
+      this.habilitarTabla = true;
     this.listReserva=resultado;
   });
   } 

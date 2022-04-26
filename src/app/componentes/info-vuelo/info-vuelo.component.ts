@@ -10,7 +10,6 @@ import { Vuelos } from 'src/app/interfaces/vuelos';
 import { info_pasajero } from 'src/app/interfaces/info_pasajero';
 import { ReservaInfo } from 'src/app/interfaces/reservaInfo';
 import { DatosVuelo } from 'src/app/interfaces/datosVuelo';
-import { EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-info-vuelo',
@@ -21,27 +20,21 @@ export class InfoVueloComponent implements OnInit {
 
   ciudadesOrigen : Object[] =[] 
    ciudadesDestino : Object[] =[] 
-   @Output() VuelosIda: EventEmitter<any> = new EventEmitter();
    vuelosIda  : Vuelos[] =[] 
    vuelosRegreso : Vuelos[] = []
    listReserva : ReservaInfo[];
-   listPasajeros : Pasajero[]= [];
+   listPasajeros : Pasajero[];
    datosPasajeros : info_pasajero[] = []
-   @Output() VueloRegreso: EventEmitter<any> = new EventEmitter();
    vueloRegreso : DatosVuelo | null ;
-   @Output() CantidadPersonas: EventEmitter<any> = new EventEmitter();
 
    habilitarDatosUsuario : boolean = false;
    vueloIda : boolean = false;
-   @Output() VueloIdaRegreso: EventEmitter<any> = new EventEmitter();
    vueloIdaRegreso : boolean = false;
    habilitarDescuentos : boolean = false;
    habilitarReservas : boolean = false;
    vueloSeleccionadoIda: Vuelo| null;
    vueloSeleccionadoRegreso: Vuelo| null;
    habilitarCampos : boolean = false;
-   @Output() HabilitarCampos: EventEmitter<any> = new EventEmitter();
-   @Output() CiudadOrigen: EventEmitter<any> = new EventEmitter();
   ciudadOrigen : string='';
   ciudadDestino : string='';
   tipoVuelo : string;
@@ -82,6 +75,7 @@ export class InfoVueloComponent implements OnInit {
   }
   listarPasajeros(pasajeros :Pasajero[]){
     this.listPasajeros=pasajeros;
+    console.log('vuelo pasajeros', this.listPasajeros)
   }
 
   //limpiar datos del formulario de pasajero
@@ -117,7 +111,6 @@ vaciarCamposInfoPasajero(){
    listarIda(){ 
         this.rutaservice.listarDestinos(this.ciudadOrigen).subscribe(resultado => {
          this.ciudadesDestino=resultado; 
-         this.CiudadOrigen.emit({data : this.ciudadOrigen})
   });
 }
   // habilita la info de pasajero
